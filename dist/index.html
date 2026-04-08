@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D Portfolio</title>
+  <link rel="stylesheet" href="/stylesheet/style.css" />
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="logo">Home</div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#work">My work</a></li>
+        <li><a href="#about">About me</a></li>
+        <li><a href="#skills">My skills</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-left">
+        <h1>Title<br>Welcome</h1>
+
+          <script type="importmap">
+              {
+                "imports": {
+                  "three": "https://unpkg.com/three@0.129.0/build/three.module.js"
+                }
+              }
+  </script>
+        <div class="socials">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <a href="#" class="contact-btn">Contact me</a>
+      </div>
+
+      <div class="hero-right">
+        <div class="model-box hero-model" id="hero-model"></div>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipiscing elit.
+          Quisque faucibus ex sapien vitae pellentesque sem placerat.
+          litora torquent per conubia nostra inceptos himenaeos.
+        </p>
+      </div>
+    </section>
+
+    <section class="work-section" id="work">
+      <div class="section-title-row">
+        <h2>My Work</h2>
+      </div>
+
+      <div class="work-grid">
+        <div class="work-card">
+          <div class="model-box small-model" id="work-model-1"></div>
+          <p>Titles</p>
+        </div>
+
+        <div class="work-card">
+          <div class="model-box small-model" id="work-model-2"></div>
+          <p>Titles</p>
+        </div>
+
+        <div class="work-card">
+          <div class="model-box small-model" id="work-model-3"></div>
+          <p>Titles</p>
+        </div>
+
+        <div class="work-card">
+          <div class="model-box small-model" id="work-model-4"></div>
+          <p>Titles</p>
+        </div>
+
+        <div class="work-card">
+          <div class="model-box small-model" id="work-model-5"></div>
+          <p>Titles</p>
+        </div>
+
+        <div class="work-card">
+          <div class="model-box small-model" id="work-model-6"></div>
+          <p>Titles</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section" id="about">
+      <div class="section-title-row">
+        <h2>About me</h2>
+      </div>
+
+      <div class="about-content">
+        <div class="model-box large-model" id="about-model"></div>
+
+        <div class="about-text">
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipiscing elit.
+            Quisque faucibus ex sapien vitae pellentesque sem placerat.
+            litora torquent per conubia nostra inceptos himenaeos.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="skills-section" id="skills">
+      <h2>My skills</h2>
+
+      <div class="skills-content">
+        <div class="skills-text">
+          <h3>HTML</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur adipiscing elit.
+            Quisque faucibus ex sapien vitae pellentesque
+          </p>
+
+          <ul>
+            <li>Lorem ipsum dolor sit</li>
+            <li>Lorem ipsum dolor sit</li>
+            <li>Lorem ipsum dolor sit</li>
+          </ul>
+        </div>
+
+        <div class="skills-visual">
+          <div class="model-box large-model" id="skills-model"></div>
+          <p>3D symbol of HTML</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <h2>Lets work together to<br>make something great</h2>
+    </section>
+  </main>
+
+  <script type="module" src="js/three.js"></script>
+</body>
+</html>

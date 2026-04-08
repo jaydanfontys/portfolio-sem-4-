@@ -1,0 +1,80 @@
+"use strict";
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+var THREE = _interopRequireWildcard(require("https://unpkg.com/three@0.129.0/build/three.module.js"));
+
+var _OrbitControls = require("https://unpkg.com/three@0.129.0/examples/jsm/controls/OrbitControls.js");
+
+var _GLTFLoader = require("https://unpkg.com/three@0.129.0/examples/jsm/loaders/GLTFLoader.js");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var modelPath = "../models/tv.glb";
+var modelBoxes = ["hero-model", "work-model-1", "work-model-2", "work-model-3", "work-model-4", "work-model-5", "work-model-6", "about-model", "skills-model"];
+
+function create3DScene(containerId) {
+  var container = document.getElementById(containerId);
+  if (!container) return;
+  var scene = new THREE.Scene();
+  scene.background = null;
+  var width = container.clientWidth;
+  var height = container.clientHeight;
+  var camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+  camera.position.set(0, 1, 4);
+  var renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    alpha: true
+  });
+  renderer.setSize(width, height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+  var controls = new _OrbitControls.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.enableZoom = false;
+  controls.enablePan = false;
+  controls.autoRotate = true;
+  controls.autoRotateSpeed = 2;
+  var ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+  scene.add(ambientLight);
+  var directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+  directionalLight.position.set(3, 5, 5);
+  scene.add(directionalLight);
+  var loader = new _GLTFLoader.GLTFLoader();
+  var model;
+  loader.load(modelPath, function (gltf) {
+    model = gltf.scene;
+    var box = new THREE.Box3().setFromObject(model);
+    var size = box.getSize(new THREE.Vector3());
+    var center = box.getCenter(new THREE.Vector3());
+    model.position.x -= center.x;
+    model.position.y -= center.y;
+    model.position.z -= center.z;
+    var maxAxis = Math.max(size.x, size.y, size.z);
+    var scale = 2 / maxAxis;
+    model.scale.setScalar(scale);
+    scene.add(model);
+  }, undefined, function (error) {
+    console.error("Error loading model in ".concat(containerId, ":"), error);
+  });
+
+  function animate() {
+    requestAnimationFrame(animate);
+    controls.update();
+    renderer.render(scene, camera);
+  }
+
+  animate();
+  window.addEventListener("resize", function () {
+    var newWidth = container.clientWidth;
+    var newHeight = container.clientHeight;
+    camera.aspect = newWidth / newHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(newWidth, newHeight);
+  });
+}
+
+modelBoxes.forEach(create3DScene);
+//# sourceMappingURL=three.dev.js.map
