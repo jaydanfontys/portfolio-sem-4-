@@ -12,14 +12,48 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-var modelPath = "../models/tv.glb";
-var modelBoxes = ["hero-model", "work-model-1", "work-model-2", "work-model-3", "work-model-4", "work-model-5", "work-model-6", "about-model", "skills-model"];
+var modelConfigs = [{
+  id: "hero-model",
+  path: "../models/soviet_retro_tv.glb",
+  scale: 3
+}, {
+  id: "work-model-1",
+  path: "../models/work-model-1.glb",
+  scale: 2.2
+}, {
+  id: "work-model-2",
+  path: "../models/work-model-2.glb",
+  scale: 2.2
+}, {
+  id: "work-model-3",
+  path: "../models/work-model-3.glb",
+  scale: 2.2
+}, {
+  id: "work-model-4",
+  path: "../models/work-model-4.glb",
+  scale: 2.2
+}, {
+  id: "work-model-5",
+  path: "../models/work-model-5.glb",
+  scale: 2.2
+}, {
+  id: "work-model-6",
+  path: "../models/work-model-6.glb",
+  scale: 2.2
+}, {
+  id: "about-model",
+  path: "../models/about-model.glb",
+  scale: 3
+}, {
+  id: "skills-model",
+  path: "../models/html5_logo.glb",
+  scale: 3
+}];
 
-function create3DScene(containerId) {
-  var container = document.getElementById(containerId);
+function create3DScene(config) {
+  var container = document.getElementById(config.id);
   if (!container) return;
   var scene = new THREE.Scene();
-  scene.background = null;
   var width = container.clientWidth;
   var height = container.clientHeight;
   var camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
@@ -43,9 +77,8 @@ function create3DScene(containerId) {
   directionalLight.position.set(3, 5, 5);
   scene.add(directionalLight);
   var loader = new _GLTFLoader.GLTFLoader();
-  var model;
-  loader.load(modelPath, function (gltf) {
-    model = gltf.scene;
+  loader.load(config.path, function (gltf) {
+    var model = gltf.scene;
     var box = new THREE.Box3().setFromObject(model);
     var size = box.getSize(new THREE.Vector3());
     var center = box.getCenter(new THREE.Vector3());
@@ -53,11 +86,15 @@ function create3DScene(containerId) {
     model.position.y -= center.y;
     model.position.z -= center.z;
     var maxAxis = Math.max(size.x, size.y, size.z);
-    var scale = 2 / maxAxis;
-    model.scale.setScalar(scale);
+    var finalScale = config.scale / maxAxis;
+    model.scale.setScalar(finalScale);
     scene.add(model);
-  }, undefined, function (error) {
-    console.error("Error loading model in ".concat(containerId, ":"), error);
+  }, function (xhr) {
+    if (xhr.total) {
+      console.log("".concat(config.id, ": ").concat(xhr.loaded / xhr.total * 100, "% loaded"));
+    }
+  }, function (error) {
+    console.error("Error loading model in ".concat(config.id, ":"), error);
   });
 
   function animate() {
@@ -76,5 +113,5 @@ function create3DScene(containerId) {
   });
 }
 
-modelBoxes.forEach(create3DScene);
+modelConfigs.forEach(create3DScene);
 //# sourceMappingURL=three.dev.js.map

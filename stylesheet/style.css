@@ -44,7 +44,6 @@ body {
   padding: 80px 40px 120px;
   display: flex;
   justify-content: center;
-  right: 30px;
   align-items: center;
   gap: 90px;
   flex-wrap: wrap;
@@ -91,10 +90,7 @@ body {
 }
 
 .model-box {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(194, 142, 255, 0.2);
-  overflow: hidden;
-  position: relative;
+  
 }
 
 .hero-model {

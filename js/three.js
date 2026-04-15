@@ -2,26 +2,59 @@ import * as THREE from "https://unpkg.com/three@0.129.0/build/three.module.js";
 import { OrbitControls } from "https://unpkg.com/three@0.129.0/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "https://unpkg.com/three@0.129.0/examples/jsm/loaders/GLTFLoader.js";
 
-const modelPath = "../models/tv.glb";
-
-const modelBoxes = [
-  "hero-model",
-  "work-model-1",
-  "work-model-2",
-  "work-model-3",
-  "work-model-4",
-  "work-model-5",
-  "work-model-6",
-  "about-model",
-  "skills-model"
+const modelConfigs = [
+  {
+    id: "hero-model",
+    path: "../models/soviet_retro_tv.glb",
+    scale: 3
+  },
+  {
+    id: "work-model-1",
+    path: "../models/work-model-1.glb",
+    scale: 2.2
+  },
+  {
+    id: "work-model-2",
+    path: "../models/work-model-2.glb",
+    scale: 2.2
+  },
+  {
+    id: "work-model-3",
+    path: "../models/work-model-3.glb",
+    scale: 2.2
+  },
+  {
+    id: "work-model-4",
+    path: "../models/work-model-4.glb",
+    scale: 2.2
+  },
+  {
+    id: "work-model-5",
+    path: "../models/work-model-5.glb",
+    scale: 2.2
+  },
+  {
+    id: "work-model-6",
+    path: "../models/work-model-6.glb",
+    scale: 2.2
+  },
+  {
+    id: "about-model",
+    path: "../models/about-model.glb",
+    scale: 3
+  },
+  {
+    id: "skills-model",
+    path: "../models/html5_logo.glb",
+    scale: 3
+  }
 ];
 
-function create3DScene(containerId) {
-  const container = document.getElementById(containerId);
+function create3DScene(config) {
+  const container = document.getElementById(config.id);
   if (!container) return;
 
   const scene = new THREE.Scene();
-  scene.background = null;
 
   const width = container.clientWidth;
   const height = container.clientHeight;
@@ -29,7 +62,11 @@ function create3DScene(containerId) {
   const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
   camera.position.set(0, 1, 4);
 
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  const renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    alpha: true
+  });
+
   renderer.setSize(width, height);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   container.appendChild(renderer.domElement);
@@ -49,12 +86,11 @@ function create3DScene(containerId) {
   scene.add(directionalLight);
 
   const loader = new GLTFLoader();
-  let model;
 
   loader.load(
-    modelPath,
-    function (glb) {
-      model = /models/soviet_retro_tv.glb;
+    config.path,
+    function (gltf) {
+      const model = gltf.scene;
 
       const box = new THREE.Box3().setFromObject(model);
       const size = box.getSize(new THREE.Vector3());
@@ -65,14 +101,18 @@ function create3DScene(containerId) {
       model.position.z -= center.z;
 
       const maxAxis = Math.max(size.x, size.y, size.z);
-      const scale = 2 / maxAxis;
-      model.scale.setScalar(scale);
+      const finalScale = config.scale / maxAxis;
+      model.scale.setScalar(finalScale);
 
       scene.add(model);
     },
-    undefined,
+    function (xhr) {
+      if (xhr.total) {
+        console.log(`${config.id}: ${(xhr.loaded / xhr.total) * 100}% loaded`);
+      }
+    },
     function (error) {
-      console.error(`Error loading model in ${containerId}:`, error);
+      console.error(`Error loading model in ${config.id}:`, error);
     }
   );
 
@@ -90,9 +130,8 @@ function create3DScene(containerId) {
 
     camera.aspect = newWidth / newHeight;
     camera.updateProjectionMatrix();
-
     renderer.setSize(newWidth, newHeight);
   });
 }
 
-modelBoxes.forEach(create3DScene);
+modelConfigs.forEach(create3DScene);
