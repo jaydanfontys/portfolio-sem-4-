@@ -15,39 +15,70 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 var modelConfigs = [{
   id: "hero-model",
   path: "../models/soviet_retro_tv.glb",
-  scale: 3
+  scale: 3,
+  floating: true
 }, {
   id: "work-model-1",
   path: "../models/work-model-1.glb",
-  scale: 2.2
+  scale: 2.2,
+  floating: false
 }, {
   id: "work-model-2",
   path: "../models/work-model-2.glb",
-  scale: 2.2
+  scale: 2.2,
+  floating: false
 }, {
   id: "work-model-3",
   path: "../models/work-model-3.glb",
-  scale: 2.2
+  scale: 2.2,
+  floating: false
 }, {
   id: "work-model-4",
   path: "../models/work-model-4.glb",
-  scale: 2.2
+  scale: 2.2,
+  floating: false
 }, {
   id: "work-model-5",
   path: "../models/work-model-5.glb",
-  scale: 2.2
+  scale: 2.2,
+  floating: false
 }, {
   id: "work-model-6",
   path: "../models/work-model-6.glb",
-  scale: 2.2
+  scale: 2.2,
+  floating: false
 }, {
   id: "about-model",
   path: "../models/about-model.glb",
-  scale: 3
-}, {
-  id: "skills-model",
+  scale: 3,
+  floating: true
+},
+/* skills cards */
+{
+  id: "skills-model-html",
   path: "../models/html5_logo.glb",
-  scale: 3
+  scale: 2.4,
+  floating: true
+}, {
+  id: "skills-model-css",
+  path: "../models/css_logo_3d_model.glb",
+  scale: 2.4,
+  floating: true
+}, {
+  id: "skills-model-js",
+  path: "../models/react_logo.glb",
+  scale: 2.4,
+  floating: true
+}, {
+  id: "skills-model-three",
+  path: "../models/three-model.glb",
+  scale: 2.4,
+  floating: true
+}, {
+  id: "skills-model-figma",
+  path: "../models/figma-model.glb",
+  scale: 2.4,
+  floating: true
 }];
 
 function create3DScene(config) {
@@ -57,7 +88,7 @@ function create3DScene(config) {
   var width = container.clientWidth;
   var height = container.clientHeight;
   var camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-  camera.position.set(0, 1, 4);
+  camera.position.set(0, 0.5, 4);
   var renderer = new THREE.WebGLRenderer({
     antialias: true,
     alpha: true
@@ -69,25 +100,31 @@ function create3DScene(config) {
   controls.enableDamping = true;
   controls.enableZoom = false;
   controls.enablePan = false;
-  controls.autoRotate = true;
-  controls.autoRotateSpeed = 2;
-  var ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+  controls.enableRotate = false;
+  var ambientLight = new THREE.AmbientLight(0xffffff, 1.4);
   scene.add(ambientLight);
-  var directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+  var directionalLight = new THREE.DirectionalLight(0xffffff, 1.8);
   directionalLight.position.set(3, 5, 5);
   scene.add(directionalLight);
+  var backLight = new THREE.DirectionalLight(0xffffff, 0.8);
+  backLight.position.set(-3, 2, -4);
+  scene.add(backLight);
   var loader = new _GLTFLoader.GLTFLoader();
+  var model = null;
+  var baseY = 0;
+  var clock = new THREE.Clock();
   loader.load(config.path, function (gltf) {
-    var model = gltf.scene;
+    model = gltf.scene;
     var box = new THREE.Box3().setFromObject(model);
     var size = box.getSize(new THREE.Vector3());
     var center = box.getCenter(new THREE.Vector3());
     model.position.x -= center.x;
-    model.position.y -= center.y;
+    model.position.y -= center.y - 1;
     model.position.z -= center.z;
     var maxAxis = Math.max(size.x, size.y, size.z);
     var finalScale = config.scale / maxAxis;
     model.scale.setScalar(finalScale);
+    baseY = model.position.y;
     scene.add(model);
   }, function (xhr) {
     if (xhr.total) {
@@ -99,6 +136,18 @@ function create3DScene(config) {
 
   function animate() {
     requestAnimationFrame(animate);
+    var elapsed = clock.getElapsedTime();
+
+    if (model) {
+      if (config.floating) {
+        model.position.y = baseY + Math.sin(elapsed * 1.6) * 0.12;
+        model.rotation.y += 0.01;
+        model.rotation.z = Math.sin(elapsed * 1.2) * 0.08;
+      } else {
+        model.rotation.y += 0.008;
+      }
+    }
+
     controls.update();
     renderer.render(scene, camera);
   }

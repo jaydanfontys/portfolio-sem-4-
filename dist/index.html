@@ -20,6 +20,13 @@
   </header>
 
   <main>
+    <script type="importmap">
+              {
+                "imports": {
+                  "three": "https://unpkg.com/three@0.129.0/build/three.module.js"
+                }
+              }
+             </script>
     <section class="hero">
       <div class="hero-left">
         <h1>Title<br>Welcome</h1>
@@ -35,15 +42,7 @@
       </div>
 
       <div class="hero-right">
-        <div class="model-box hero-model" id="hero-model">
-            <script type="importmap">
-              {
-                "imports": {
-                  "three": "https://unpkg.com/three@0.129.0/build/three.module.js"
-                }
-              }
-             </script>
-        </div>
+        <div class="model-box hero-model" id="hero-model"></div>
         <p>
           Lorem ipsum dolor sit amet consectetur adipiscing elit.
           Quisque faucibus ex sapien vitae pellentesque sem placerat.
@@ -109,27 +108,55 @@
     </section>
 
     <section class="skills-section" id="skills">
-      <h2>My skills</h2>
+      <div class="skills-header">
+        <h2>My Skills</h2>
+      </div>
 
-      <div class="skills-content">
-        <div class="skills-text">
-          <h3>HTML</h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipiscing elit.
-            Quisque faucibus ex sapien vitae pellentesque
-          </p>
+      <div class="skills-stack">
+        <article class="skill-card skill-card-1">
+          <div class="skill-card-inner">
+            <span class="skill-label">Frontend</span>
+            <h3>HTML</h3>
+            <div class="skill-model-box" id="skills-model-html"></div>
+            <p>Structure, semantics, accessibility and clean page layouts.</p>
+          </div>
+        </article>
 
-          <ul>
-            <li>Lorem ipsum dolor sit</li>
-            <li>Lorem ipsum dolor sit</li>
-            <li>Lorem ipsum dolor sit</li>
-          </ul>
-        </div>
+        <article class="skill-card skill-card-2">
+          <div class="skill-card-inner">
+            <span class="skill-label">Styling</span>
+            <h3>CSS</h3>
+            <div class="skill-model-box" id="skills-model-css"></div>
+            <p>Responsive layouts, animations, spacing and visual polish.</p>
+          </div>
+        </article>
 
-        <div class="skills-visual">
-          <div class="model-box large-model" id="skills-model"></div>
-          <p>3D symbol of HTML</p>
-        </div>
+        <article class="skill-card skill-card-3">
+          <div class="skill-card-inner">
+            <span class="skill-label">Interaction</span>
+            <h3>JavaScript</h3>
+            <div class="skill-model-box" id="skills-model-js"></div>
+            <p>Interactive experiences, logic and dynamic UI behavior.</p>
+          </div>
+        </article>
+
+        <article class="skill-card skill-card-4">
+          <div class="skill-card-inner">
+            <span class="skill-label">3D / Web</span>
+            <h3>Three.js</h3>
+            <div class="skill-model-box" id="skills-model-three"></div>
+            <p>3D scenes, models, motion and immersive portfolio visuals.</p>
+          </div>
+        </article>
+
+        <article class="skill-card skill-card-5">
+          <div class="skill-card-inner">
+            <span class="skill-label">Design</span>
+            <h3>Figma</h3>
+            <div class="skill-model-box" id="skills-model-figma"></div>
+            <p>Wireframes, UI design, layout exploration and iterations.</p>
+          </div>
+        </article>
       </div>
     </section>
 
