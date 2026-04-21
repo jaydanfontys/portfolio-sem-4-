@@ -5,7 +5,7 @@ import { GLTFLoader } from "https://unpkg.com/three@0.129.0/examples/jsm/loaders
 const modelConfigs = [
   {
     id: "hero-model",
-    path: "../models/soviet_retro_tv.glb",
+    path: "../models/scene.glb",
     scale: 3,
     floating: true
   },
@@ -73,16 +73,22 @@ const modelConfigs = [
   },
   {
     id: "skills-model-three",
-    path: "../models/three-model.glb",
+    path: "../models/javascript_.glb",
     scale: 2.4,
     floating: true
   },
   {
     id: "skills-model-figma",
-    path: "../models/figma-model.glb",
+    path: "../models/figma.glb",
     scale: 2.4,
     floating: true
-  }
+  },
+  {
+  id: "skills-model-github",
+  path: "../models/3d_github_logo.glb",
+  scale: 2.4,
+  floating: true
+}
 ];
 
 function create3DScene(config) {
