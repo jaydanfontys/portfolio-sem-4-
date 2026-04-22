@@ -6,89 +6,136 @@ const modelConfigs = [
   {
     id: "hero-model",
     path: "../models/scene.glb",
-    scale: 3,
-    floating: true
+    scale: 2.5,
+    floating: true,
+    yOffset: 0.1,
+    cameraZ: 5.8,
+    wobble: true
   },
   {
     id: "work-model-1",
     path: "../models/work-model-1.glb",
     scale: 2.2,
-    floating: false
+    floating: false,
+    yOffset: 0,
+    cameraZ: 4,
+    wobble: false
   },
   {
     id: "work-model-2",
     path: "../models/work-model-2.glb",
     scale: 2.2,
-    floating: false
+    floating: false,
+    yOffset: 0,
+    cameraZ: 4,
+    wobble: false
   },
   {
     id: "work-model-3",
     path: "../models/work-model-3.glb",
     scale: 2.2,
-    floating: false
+    floating: false,
+    yOffset: 0,
+    cameraZ: 4,
+    wobble: false
   },
   {
     id: "work-model-4",
     path: "../models/work-model-4.glb",
     scale: 2.2,
-    floating: false
+    floating: false,
+    yOffset: 0,
+    cameraZ: 4,
+    wobble: false
   },
   {
     id: "work-model-5",
     path: "../models/work-model-5.glb",
     scale: 2.2,
-    floating: false
+    floating: false,
+    yOffset: 0,
+    cameraZ: 4,
+    wobble: false
   },
   {
     id: "work-model-6",
     path: "../models/work-model-6.glb",
     scale: 2.2,
-    floating: false
+    floating: false,
+    yOffset: 0,
+    cameraZ: 4,
+    wobble: false
   },
   {
     id: "about-model",
-    path: "../models/about-model.glb",
-    scale: 3,
-    floating: true
+    path: "../models/gadget_-_player_-_storage_device.glb",
+    scale: 6,
+    floating: true,
+    yOffset: 0.6,
+    cameraZ: 4.6,
+    wobble: true
   },
 
-  /* skills cards */
   {
-    id: "skills-model-html",
-    path: "../models/html5_logo.glb",
-    scale: 2.4,
-    floating: true
-  },
+  id: "skills-model-html",
+  path: "../models/html5_logo.glb",
+  scale: 2.2,
+  floating: true,
+  yOffset: 0.1,
+  cameraZ: 4.8,
+  wobble: false,
+  rotateX: 0,
+  rotateY: -1.57,
+  rotateZ: 0
+},
   {
     id: "skills-model-css",
     path: "../models/css_logo_3d_model.glb",
-    scale: 2.4,
-    floating: true
+    scale: 2.2,
+    floating: true,
+    yOffset: 0.1,
+    cameraZ: 4.8,
+    wobble: false
   },
   {
     id: "skills-model-js",
     path: "../models/react_logo.glb",
-    scale: 2.4,
-    floating: true
+    scale: 2.2,
+    floating: true,
+    yOffset: 0.1,
+    cameraZ: 5,
+    wobble: false
   },
   {
     id: "skills-model-three",
     path: "../models/javascript_.glb",
-    scale: 2.4,
-    floating: true
+    scale: 2.2,
+    floating: true,
+    yOffset: 0.1,
+    cameraZ: 4.8,
+    wobble: false
   },
   {
     id: "skills-model-figma",
     path: "../models/figma.glb",
-    scale: 2.4,
-    floating: true
+    scale: 2.2,
+    floating: true,
+    yOffset: 0.1,
+    cameraZ: 4.8,
+    wobble: false,
+    rotateX: 0,
+    rotateY: -1.57,
+    rotateZ: -5
   },
   {
-  id: "skills-model-github",
-  path: "../models/3d_github_logo.glb",
-  scale: 2.4,
-  floating: true
-}
+    id: "skills-model-github",
+    path: "../models/3d_github_logo.glb",
+    scale: 2.1,
+    floating: true,
+    yOffset: 0.08,
+    cameraZ: 5.1,
+    wobble: false
+  }
 ];
 
 function create3DScene(config) {
@@ -101,7 +148,7 @@ function create3DScene(config) {
   const height = container.clientHeight;
 
   const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-  camera.position.set(0, 0.5, 4);
+  camera.position.set(0, 0.2, config.cameraZ || 4.5);
 
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
@@ -131,28 +178,53 @@ function create3DScene(config) {
 
   const loader = new GLTFLoader();
 
-  let model = null;
+  let pivot = null;
   let baseY = 0;
   const clock = new THREE.Clock();
+
+  const isSkillModel = config.id.startsWith("skills-model-");
+  const card = isSkillModel ? container.closest(".skill-card") : null;
+  let isCardHovered = false;
+
+  if (card) {
+    card.addEventListener("mouseenter", () => {
+      isCardHovered = true;
+    });
+
+    card.addEventListener("mouseleave", () => {
+      isCardHovered = false;
+    });
+  }
 
   loader.load(
     config.path,
     function (gltf) {
-      model = gltf.scene;
+      const rawModel = gltf.scene;
 
-      const box = new THREE.Box3().setFromObject(model);
+      const box = new THREE.Box3().setFromObject(rawModel);
       const size = box.getSize(new THREE.Vector3());
-      const center = box.getCenter(new THREE.Vector3());
-      model.position.x -= center.x;
-      model.position.y -= center.y - 1;
-      model.position.z -= center.z;
-
       const maxAxis = Math.max(size.x, size.y, size.z);
-      const finalScale = config.scale / maxAxis;
-      model.scale.setScalar(finalScale);
 
-      baseY = model.position.y;
-      scene.add(model);
+      const finalScale = config.scale / maxAxis;
+      rawModel.scale.setScalar(finalScale);
+
+      const scaledBox = new THREE.Box3().setFromObject(rawModel);
+      const scaledCenter = scaledBox.getCenter(new THREE.Vector3());
+
+      rawModel.position.x -= scaledCenter.x;
+      rawModel.position.y -= scaledCenter.y;
+      rawModel.position.z -= scaledCenter.z;
+
+      rawModel.rotation.x = config.rotateX || 0;
+      rawModel.rotation.y = config.rotateY || 0;
+      rawModel.rotation.z = config.rotateZ || 0;
+
+      pivot = new THREE.Group();
+      pivot.position.y = config.yOffset || 0;
+      pivot.add(rawModel);
+
+      baseY = pivot.position.y;
+      scene.add(pivot);
     },
     function (xhr) {
       if (xhr.total) {
@@ -164,18 +236,41 @@ function create3DScene(config) {
     }
   );
 
+  function normalizeAngle(angle) {
+    while (angle > Math.PI) angle -= Math.PI * 2;
+    while (angle < -Math.PI) angle += Math.PI * 2;
+    return angle;
+  }
+
   function animate() {
     requestAnimationFrame(animate);
 
     const elapsed = clock.getElapsedTime();
 
-    if (model) {
-      if (config.floating) {
-        model.position.y = baseY + Math.sin(elapsed * 1.6) * 0.12;
-        model.rotation.y += 0.01;
-        model.rotation.z = Math.sin(elapsed * 1.2) * 0.08;
+    if (pivot) {
+      if (isSkillModel) {
+        pivot.position.y = baseY + Math.sin(elapsed * 1.8) * 0.1;
+        pivot.rotation.z = 0;
+
+        if (isCardHovered) {
+          pivot.rotation.y += 0.04;
+        } else {
+          const targetRotation = 0;
+          const currentRotation = normalizeAngle(pivot.rotation.y);
+          pivot.rotation.y += (targetRotation - currentRotation) * 0.08;
+        }
+      } else if (config.floating) {
+        pivot.position.y = baseY + Math.sin(elapsed * 1.6) * 0.12;
+        pivot.rotation.y += 0.01;
+
+        if (config.wobble) {
+          pivot.rotation.z = Math.sin(elapsed * 1.2) * 0.08;
+        } else {
+          pivot.rotation.z = 0;
+        }
       } else {
-        model.rotation.y += 0.008;
+        pivot.rotation.y += 0.008;
+        pivot.rotation.z = 0;
       }
     }
 
