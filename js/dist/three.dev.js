@@ -12,6 +12,64 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
+var video = document.createElement("video");
+video.src = "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4";
+video.crossOrigin = "anonymous";
+video.loop = true;
+video.muted = true;
+video.playsInline = true;
+video.autoplay = true;
+video.style.display = "none";
+document.body.appendChild(video);
+video.load();
+video.addEventListener('loadeddata', function () {
+  return console.log('Video loaded successfully');
+});
+video.addEventListener('error', function (e) {
+  return console.error('Video load error:', e);
+});
+video.play()["catch"](function (e) {
+  return console.log("Initial video play blocked:", e);
+});
+var videoTexture = new THREE.VideoTexture(video);
+videoTexture.minFilter = THREE.LinearFilter;
+videoTexture.magFilter = THREE.LinearFilter;
+videoTexture.format = THREE.RGBFormat;
+videoTexture.wrapS = THREE.ClampToEdgeWrapping;
+videoTexture.wrapT = THREE.ClampToEdgeWrapping;
+videoTexture.repeat.set(1, 1);
+videoTexture.offset.set(0, 0); // Material for the video plane
+
+var videoMat = new THREE.MeshBasicMaterial({
+  map: videoTexture,
+  side: THREE.DoubleSide
+}); // Function to create a curved edge plane
+
+function createCurvedEdgePlane(width, height) {
+  var segments = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 16;
+  var geometry = new THREE.PlaneGeometry(width, height, segments, segments);
+  var pos = geometry.attributes.position;
+  var arr = pos.array; // Curve the edges inward
+
+  for (var i = 0; i < arr.length; i += 3) {
+    var x = arr[i];
+    var y = arr[i + 1]; // Normalize distance from center (0 at center, 1 at edge)
+
+    var distX = Math.abs(x) / (width / 2);
+    var distY = Math.abs(y) / (height / 2);
+    var dist = Math.max(distX, distY); // Apply curve to outer portions
+
+    if (dist > 0.4) {
+      var curveInfluence = Math.pow((dist - 0.4) / 0.6, 2);
+      arr[i + 2] = -curveInfluence * 0.15; // curve inward (negative Z)
+    }
+  }
+
+  pos.needsUpdate = true;
+  geometry.computeVertexNormals();
+  return geometry;
+}
+
 var modelConfigs = [{
   id: "hero-model",
   path: "../models/scene.glb",
@@ -70,7 +128,7 @@ var modelConfigs = [{
   wobble: false
 }, {
   id: "about-model",
-  path: "../models/gadget_-_player_-_storage_device.glb",
+  path: "../models/gopro_10.glb",
   scale: 6,
   floating: true,
   yOffset: 0.6,
@@ -175,6 +233,17 @@ function create3DScene(config) {
     card.addEventListener("mouseleave", function () {
       isCardHovered = false;
     });
+  } // For hero-model video play on click
+
+
+  if (config.id === "hero-model") {
+    window.addEventListener("click", function () {
+      video.play()["catch"](function (e) {
+        return console.log("video play blocked:", e);
+      });
+    }, {
+      once: true
+    });
   }
 
   loader.load(config.path, function (gltf) {
@@ -192,11 +261,67 @@ function create3DScene(config) {
     rawModel.rotation.x = config.rotateX || 0;
     rawModel.rotation.y = config.rotateY || 0;
     rawModel.rotation.z = config.rotateZ || 0;
+
+    if (config.id === "hero-model") {
+      // Create the curved video plane for the TV screen
+      var videoPlane = new THREE.Mesh(createCurvedEdgePlane(1.2, 0.7), videoMat); // Position and scale the plane inside the model
+
+      var _box = new THREE.Box3().setFromObject(rawModel);
+
+      var _size = _box.getSize(new THREE.Vector3());
+
+      videoPlane.position.set(0, _size.y * 0.63, _size.z * 0.38);
+      videoPlane.scale.set(_size.x * 0.57, _size.y * 0.7, 1);
+      videoPlane.position.z += 0.01;
+      rawModel.add(videoPlane); // Start video
+
+      video.play()["catch"](function () {}); // Debug: Add a visible debug plane to check if video texture works
+
+      var debugPlane = new THREE.Mesh(new THREE.PlaneGeometry(3, 2), new THREE.MeshBasicMaterial({
+        map: videoTexture,
+        side: THREE.DoubleSide
+      }));
+      debugPlane.position.set(0, _size.y * 0.8, _size.z * 1.5);
+      scene.add(debugPlane);
+      console.log("Video plane added to model, debug plane at", debugPlane.position);
+    } else {
+      // For other models, apply texture directly if needed
+      rawModel.traverse(function (child) {
+        if (child.isMesh) {
+          var name = child.name.toLowerCase();
+
+          if (name.includes("screen") || name.includes("display") || name.includes("panel") || name.includes("monitor") || name.includes("tv") || name.includes("glass")) {
+            child.material = new THREE.MeshBasicMaterial({
+              map: videoTexture,
+              toneMapped: false,
+              side: THREE.FrontSide
+            });
+            child.material.needsUpdate = true;
+          }
+        }
+      });
+    }
+
     pivot = new THREE.Group();
     pivot.position.y = config.yOffset || 0;
     pivot.add(rawModel);
     baseY = pivot.position.y;
-    scene.add(pivot);
+    scene.add(pivot); // Adjust camera for large models
+
+    if (config.id === "about-model") {
+      var maxDim = Math.max(size.x, size.y, size.z);
+      var fov = camera.fov * (Math.PI / 180);
+      var newCameraZ = Math.abs(maxDim / 2 / Math.tan(fov / 2));
+      newCameraZ *= 2.5; // Extra padding
+
+      camera.position.set(0, maxDim * 0.35, newCameraZ);
+      camera.near = maxDim / 100;
+      camera.far = maxDim * 100;
+      camera.updateProjectionMatrix();
+      controls.target.set(0, 0, 0);
+      controls.update();
+      console.log("Adjusted camera for about-model: z =", newCameraZ, "model size:", size);
+    }
   }, function (xhr) {
     if (xhr.total) {
       console.log("".concat(config.id, ": ").concat(xhr.loaded / xhr.total * 100, "% loaded"));
@@ -235,12 +360,24 @@ function create3DScene(config) {
         }
       } else if (config.floating) {
         pivot.position.y = baseY + Math.sin(elapsed * 1.6) * 0.12;
-        pivot.rotation.y += 0.01;
 
-        if (config.wobble) {
-          pivot.rotation.z = Math.sin(elapsed * 1.2) * 0.08;
+        if (config.id === "hero-model") {
+          pivot.rotation.y = 0;
+          pivot.position.x = 0;
+
+          if (config.wobble) {
+            pivot.rotation.z = Math.sin(elapsed * 1.2) * 0.08;
+          } else {
+            pivot.rotation.z = 0;
+          }
         } else {
-          pivot.rotation.z = 0;
+          pivot.rotation.y += 0.01;
+
+          if (config.wobble) {
+            pivot.rotation.z = Math.sin(elapsed * 1.2) * 0.08;
+          } else {
+            pivot.rotation.z = 0;
+          }
         }
       } else {
         pivot.rotation.y += 0.008;

@@ -15,8 +15,8 @@ html {
 }
 
 body {
-  font-family: "DM Serif Display", serif;
-   color: white;
+  font-family: "Space Grotesk", sans-serif;
+  color: white;
   background: linear-gradient(to bottom, #000000 0%, #120014 40%, #2a1230 100%);
   min-height: 100vh;
 }
@@ -27,19 +27,20 @@ body {
 .skills-header h2,
 .skill-card h3,
 .cta-section h2 {
-  font-family: "DM Serif Display", serif;
+  font-family: "Abril Fatface", cursive;
 }
 
 .hero-bg-word,
 .hero-left h1 {
-  font-family: "Allura", cursive;
+  font-family: "Abril Fatface", cursive;
 }
 
 .skill-label,
 .skill-card p,
 .about-text p,
+.hero-left p,
 .hero-small-text {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Space Grotesk", sans-serif;
 }
 .navbar {
   width: 100%;
@@ -69,11 +70,10 @@ body {
   width: 100%;
   padding: 80px 40px 120px;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   gap: 90px;
   flex-wrap: wrap;
-  padding-left: 300px;
 }
 
 .hero-left {
@@ -83,7 +83,8 @@ body {
 }
 
 .hero-left h1 {
-  font-size: 4rem;
+  font-family: "Abril Fatface", cursive;
+  font-size: 5rem;
   font-weight: 400;
   line-height: 1.1;
 }
