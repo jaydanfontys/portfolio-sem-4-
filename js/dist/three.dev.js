@@ -73,12 +73,12 @@ function createCurvedEdgePlane(width, height) {
 var modelConfigs = [{
   id: "hero-model",
   path: "../models/scene.glb",
-  scale: 2.5,
+  scale: 4.2,
   floating: true,
-  yOffset: 0.1,
-  cameraZ: 5.8,
-  wobble: true
-}, {
+  yOffset: 0.25,
+  cameraZ: 7.2,
+  wobble: false
+},, {
   id: "work-model-1",
   path: "../models/work-model-1.glb",
   scale: 2.2,
@@ -399,5 +399,24 @@ function create3DScene(config) {
   });
 }
 
+var workItems = document.querySelectorAll(".work-item");
+var workPreviews = document.querySelectorAll(".work-preview-model");
+var workObserver = new IntersectionObserver(function (entries) {
+  entries.forEach(function (entry) {
+    if (!entry.isIntersecting) return;
+    var activeId = entry.target.dataset.model;
+    workItems.forEach(function (item) {
+      item.classList.toggle("is-active", item === entry.target);
+    });
+    workPreviews.forEach(function (preview) {
+      preview.classList.toggle("active-preview", preview.id === activeId);
+    });
+  });
+}, {
+  threshold: 0.6
+});
+workItems.forEach(function (item) {
+  return workObserver.observe(item);
+});
 modelConfigs.forEach(create3DScene);
 //# sourceMappingURL=three.dev.js.map

@@ -61,14 +61,14 @@ function createCurvedEdgePlane(width, height, segments = 16) {
 
 const modelConfigs = [
   {
-    id: "hero-model",
-    path: "../models/scene.glb",
-    scale: 2.5,
-    floating: true,
-    yOffset: 0.1,
-    cameraZ: 5.8,
-    wobble: true
-  },
+  id: "hero-model",
+  path: "../models/scene.glb",
+  scale: 4.2,
+  floating: true,
+  yOffset: 0.25,
+  cameraZ: 7.2,
+  wobble: false
+},,
   {
     id: "work-model-1",
     path: "../models/work-model-1.glb",
@@ -423,5 +423,31 @@ function create3DScene(config) {
     renderer.setSize(newWidth, newHeight);
   });
 }
+const workItems = document.querySelectorAll(".work-item");
+const workPreviews = document.querySelectorAll(".work-preview-model");
+
+const workObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+
+      const activeId = entry.target.dataset.model;
+
+      workItems.forEach((item) => {
+        item.classList.toggle("is-active", item === entry.target);
+      });
+
+      workPreviews.forEach((preview) => {
+        preview.classList.toggle("active-preview", preview.id === activeId);
+      });
+    });
+  },
+  {
+    threshold: 0.6
+  }
+);
+
+workItems.forEach((item) => workObserver.observe(item));
+
 
 modelConfigs.forEach(create3DScene);
