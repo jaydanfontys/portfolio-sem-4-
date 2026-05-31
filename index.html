@@ -44,6 +44,8 @@
 
 
     <section class="hero section-theme hero-theme" data-theme="hero">
+
+      
       <div class="section-overlay hero-overlay"></div>
 
       <div class="hero-label reveal-up">Featured digital experience</div>
@@ -65,6 +67,7 @@
         </p>
       </div>
 
+      
       <div class="hero-right reveal-scale">
         <div class="hero-visual">
           <div class="hero-glow"></div>
@@ -202,74 +205,96 @@
   </div>
 </section>
 
-    <section class="skills-section section-theme skills-theme" id="skills" data-theme="skills">
-      <div class="section-overlay skills-overlay"></div>
 
-      <div class="skills-header reveal-up">
-        <h2>My Skills</h2>
+<section class="skills-section section-theme skills-theme" id="skills" data-theme="skills">
+  <div class="section-overlay skills-overlay"></div>
+
+  <div class="skills-shell reveal-up">
+    <div class="skills-topline">
+      <span class="skills-kicker">Capabilities</span>
+      <h2>My Skills</h2>
+    </div>
+
+    <div class="skills-showcase">
+      <aside class="skills-nav">
+        <button class="skill-tab is-active" data-skill="html">
+          <span class="skill-tab-number">01</span>
+          <span class="skill-tab-name">HTML</span>
+        </button>
+
+        <button class="skill-tab" data-skill="css">
+          <span class="skill-tab-number">02</span>
+          <span class="skill-tab-name">CSS</span>
+        </button>
+
+        <button class="skill-tab" data-skill="js">
+          <span class="skill-tab-number">03</span>
+          <span class="skill-tab-name">JavaScript</span>
+        </button>
+
+        <button class="skill-tab" data-skill="three">
+          <span class="skill-tab-number">04</span>
+          <span class="skill-tab-name">Three.js</span>
+        </button>
+
+        <button class="skill-tab" data-skill="figma">
+          <span class="skill-tab-number">05</span>
+          <span class="skill-tab-name">Figma</span>
+        </button>
+
+        <button class="skill-tab" data-skill="github">
+          <span class="skill-tab-number">06</span>
+          <span class="skill-tab-name">GitHub</span>
+        </button>
+      </aside>
+
+      <div class="skills-stage">
+        <div class="skills-stage-glow skills-stage-glow-1"></div>
+        <div class="skills-stage-glow skills-stage-glow-2"></div>
+
+        <div class="skills-panel">
+          <div class="skills-panel-meta">
+            <span id="skills-panel-label">Frontend</span>
+            <span id="skills-panel-count">01 / 06</span>
+          </div>
+
+          <div class="skills-panel-main">
+            <div class="skills-panel-copy">
+              <h3 id="skills-panel-title">HTML</h3>
+              <p id="skills-panel-text">
+                Structure, semantics, accessibility and clean page layouts.
+              </p>
+            </div>
+
+            <div class="skills-panel-model-wrap">
+              <div class="skills-prism-bg" id="skills-prism"></div>
+
+              <div class="skills-panel-model is-active" id="skills-model-html"></div>
+              <div class="skills-panel-model" id="skills-model-css"></div>
+              <div class="skills-panel-model" id="skills-model-js"></div>
+              <div class="skills-panel-model" id="skills-model-three"></div>
+              <div class="skills-panel-model" id="skills-model-figma"></div>
+              <div class="skills-panel-model" id="skills-model-github"></div>
+            </div>
+          
+          </div>
+        </div>
       </div>
+    </div>
+  </div>
+</section>
 
-      <div class="skills-stack">
-        <article class="skill-card skill-card-1 reveal-up">
-          <div class="skill-card-inner">
-            <span class="skill-label">Frontend</span>
-            <h3>HTML</h3>
-            <div class="skill-model-box" id="skills-model-html"></div>
-            <p>Structure, semantics, accessibility and clean page layouts.</p>
-          </div>
-        </article>
+   <section class="cta-section section-theme cta-theme" id="contact" data-theme="cta">
+  <div class="section-overlay cta-overlay"></div>
 
-        <article class="skill-card skill-card-2 reveal-up">
-          <div class="skill-card-inner">
-            <span class="skill-label">Styling</span>
-            <h3>CSS</h3>
-            <div class="skill-model-box" id="skills-model-css"></div>
-            <p>Responsive layouts, animations, spacing and visual polish.</p>
-          </div>
-        </article>
+  <canvas class="cta-ballpit-bg" id="cta-ballpit"></canvas>
 
-        <article class="skill-card skill-card-3 reveal-up">
-          <div class="skill-card-inner">
-            <span class="skill-label">Interaction</span>
-            <h3>JavaScript</h3>
-            <div class="skill-model-box" id="skills-model-js"></div>
-            <p>Interactive experiences, logic and dynamic UI behavior.</p>
-          </div>
-        </article>
+  <div class="cta-content">
+    <h2 class="reveal-up">Lets work together to<br>make something great</h2>
+  </div>
+</section>
 
-        <article class="skill-card skill-card-4 reveal-up">
-          <div class="skill-card-inner">
-            <span class="skill-label">3D / Web</span>
-            <h3>Three.js</h3>
-            <div class="skill-model-box" id="skills-model-three"></div>
-            <p>3D scenes, models, motion and immersive portfolio visuals.</p>
-          </div>
-        </article>
 
-        <article class="skill-card skill-card-5 reveal-up">
-          <div class="skill-card-inner">
-            <span class="skill-label">Design</span>
-            <h3>Figma</h3>
-            <div class="skill-model-box" id="skills-model-figma"></div>
-            <p>Wireframes, UI design, layout exploration and iterations.</p>
-          </div>
-        </article>
-
-        <article class="skill-card skill-card-6 reveal-up">
-          <div class="skill-card-inner">
-            <span class="skill-label">Version Control</span>
-            <h3>GitHub</h3>
-            <div class="skill-model-box" id="skills-model-github"></div>
-            <p>Repositories, version control, backups and structured project workflow.</p>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="cta-section section-theme cta-theme" id="contact" data-theme="cta">
-      <div class="section-overlay cta-overlay"></div>
-      <h2 class="reveal-up">Lets work together to<br>make something great</h2>
-    </section>
   </main>
 
   <script type="module" src="js/three.js"></script>
