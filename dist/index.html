@@ -6,153 +6,211 @@
   <title>3D Portfolio</title>
   <link rel="stylesheet" href="stylesheet/style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Space+Grotesk:wght@400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="bg-animation">
-  <div class="bg-grid"></div>
+  <div class="bg-animation">
+    <div class="bg-grid"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
 
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
+  <header class="navbar">
+    <div class="nav-icon">J</div>
 
-</div>
- <header class="navbar">
-  <div class="nav-icon">J</div>
+    <nav class="nav-pill">
+      <ul class="nav-links">
+        <li><a href="#work">Portfolio</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
 
-  <nav class="nav-pill">
-    <ul class="nav-links">
-      <li><a href="#work">Portfolio</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
-
-  <div class="nav-menu">✦</div>
-</header>
+    <div class="nav-menu">✦</div>
+  </header>
 
   <main>
-    <script type="importmap">
+
+     <script type="importmap">
               {
                 "imports": {
                   "three": "https://unpkg.com/three@0.129.0/build/three.module.js"
                 }
               }
              </script>
-   <section class="hero">
-  <div class="hero-label">FULL-SERVICE AGENCY</div>
-
-  <div class="hero-left">
-    <h1>
-      I design bold digital
-      experiences with 3D,
-      frontend and creative
-      storytelling.
-    </h1>
-  </div>
-
-  <div class="hero-center">
-    <div class="model-box hero-model" id="hero-model"></div>
-  </div>
-
-  </section>
-
-  <section class="work-section" id="work">
-  <div class="work-layout">
-    <div class="work-left">
-      <p class="work-kicker">Selected Projects</p>
-      <h2>My Work</h2>
-
-      <article class="work-item is-active" data-model="work-model-1">
-        <span class="work-number">01</span>
-        <div class="work-copy">
-          <h3>Project One</h3>
-          <p>A bold interactive project focused on visual storytelling and motion.</p>
-        </div>
-      </article>
-
-      <article class="work-item" data-model="work-model-2">
-        <span class="work-number">02</span>
-        <div class="work-copy">
-          <h3>Project Two</h3>
-          <p>A web experience combining layout, branding, and immersive presentation.</p>
-        </div>
-      </article>
-
-      <article class="work-item" data-model="work-model-3">
-        <span class="work-number">03</span>
-        <div class="work-copy">
-          <h3>Project Three</h3>
-          <p>A concept-driven design exploring interaction, visuals, and digital identity.</p>
-        </div>
-      </article>
-
-      <article class="work-item" data-model="work-model-4">
-        <span class="work-number">04</span>
-        <div class="work-copy">
-          <h3>Project Four</h3>
-          <p>A creative project where structure, pacing, and visual design work together.</p>
-        </div>
-      </article>
-
-      <article class="work-item" data-model="work-model-5">
-        <span class="work-number">05</span>
-        <div class="work-copy">
-          <h3>Project Five</h3>
-          <p>A stylized piece focused on strong aesthetics, smooth motion, and atmosphere.</p>
-        </div>
-      </article>
-
-      <article class="work-item" data-model="work-model-6">
-        <span class="work-number">06</span>
-        <div class="work-copy">
-          <h3>Project Six</h3>
-          <p>A showcase piece highlighting experimentation with 3D, interface, and flow.</p>
-        </div>
-      </article>
-    </div>
-
-    <div class="work-right">
-      <div class="work-sticky-preview">
-        <div class="work-preview-model active-preview" id="work-model-1"></div>
-        <div class="work-preview-model" id="work-model-2"></div>
-        <div class="work-preview-model" id="work-model-3"></div>
-        <div class="work-preview-model" id="work-model-4"></div>
-        <div class="work-preview-model" id="work-model-5"></div>
-        <div class="work-preview-model" id="work-model-6"></div>
-      </div>
-    </div>
-  </div>
-</section>
 
 
-    <section class="about-section" id="about">
-      <div class="section-title-row">
-        <h2>About me</h2>
+    <section class="hero section-theme hero-theme" data-theme="hero">
+      <div class="section-overlay hero-overlay"></div>
+
+      <div class="hero-label reveal-up">Featured digital experience</div>
+
+      <div class="hero-left reveal-up">
+        <p class="hero-eyebrow">Creative developer studio</p>
+
+        <h1>
+          Welcome  I’m Jaydan de Windt, a creative developer focused on
+    immersive 3D storytelling, sharp UI design, and interactive
+          <span class="hero-typewriter animate" data-words="motion,impact,flow,vision">motion</span>.
+        </h1>
+
+        <p class="hero-subtext">
+          This portfolio is a curated look into who I am, the projects I’ve created,
+    and the skills I continue to develop. It was designed to give future employers
+    a clear sense of my style, my creativity, and the way I bring frontend ideas
+    to life through premium visuals, modern animation, and memorable digital experiences.
+        </p>
       </div>
 
-      <div class="about-content">
-        <div class="model-box large-model" id="about-model"></div>
+      <div class="hero-right reveal-scale">
+        <div class="hero-visual">
+          <div class="hero-glow"></div>
+          <div class="model-box hero-model" id="hero-model"></div>
+        </div>
+      </div>
 
-        <div class="about-text">
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipiscing elit.
-            Quisque faucibus ex sapien vitae pellentesque sem placerat.
-            litora torquent per conubia nostra inceptos himenaeos.
-          </p>
+      <div class="hero-scroll reveal-up">
+        <span class="hero-scroll-arrow"></span>
+        <p>Scroll to explore</p>
+      </div>
+    </section>
+
+    <section class="work-section section-theme work-theme" id="work" data-theme="work">
+      <div class="section-overlay work-overlay"></div>
+
+      <div class="work-layout">
+        <div class="work-left">
+          <p class="work-kicker reveal-up">Selected Projects</p>
+          <h2 class="reveal-up">My Work</h2>
+
+          <div class="work-list-wrap reveal-up">
+            <div class="work-progress-line">
+              <span class="work-progress-fill"></span>
+            </div>
+
+            <div class="work-list">
+              <article class="work-item is-active" data-model="work-model-1" data-title="Project One" tabindex="0">
+                <span class="work-number">01</span>
+                <div class="work-copy">
+                  <h3>Project One</h3>
+                  <p>A bold interactive project focused on visual storytelling and motion.</p>
+                </div>
+              </article>
+
+              <article class="work-item" data-model="work-model-2" data-title="Project Two" tabindex="0">
+                <span class="work-number">02</span>
+                <div class="work-copy">
+                  <h3>Project Two</h3>
+                  <p>A web experience combining layout, branding, and immersive presentation.</p>
+                </div>
+              </article>
+
+              <article class="work-item" data-model="work-model-3" data-title="Project Three" tabindex="0">
+                <span class="work-number">03</span>
+                <div class="work-copy">
+                  <h3>Project Three</h3>
+                  <p>A concept-driven design exploring interaction, visuals, and digital identity.</p>
+                </div>
+              </article>
+
+              <article class="work-item" data-model="work-model-4" data-title="Project Four" tabindex="0">
+                <span class="work-number">04</span>
+                <div class="work-copy">
+                  <h3>Project Four</h3>
+                  <p>A creative project where structure, pacing, and visual design work together.</p>
+                </div>
+              </article>
+
+              <article class="work-item" data-model="work-model-5" data-title="Project Five" tabindex="0">
+                <span class="work-number">05</span>
+                <div class="work-copy">
+                  <h3>Project Five</h3>
+                  <p>A stylized piece focused on strong aesthetics, smooth motion, and atmosphere.</p>
+                </div>
+              </article>
+
+              <article class="work-item" data-model="work-model-6" data-title="Project Six" tabindex="0">
+                <span class="work-number">06</span>
+                <div class="work-copy">
+                  <h3>Project Six</h3>
+                  <p>A showcase piece highlighting experimentation with 3D, interface, and flow.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-right reveal-scale">
+          <div class="work-sticky-preview">
+            <div class="work-preview-model active-preview" id="work-model-1"></div>
+            <div class="work-preview-model" id="work-model-2"></div>
+            <div class="work-preview-model" id="work-model-3"></div>
+            <div class="work-preview-model" id="work-model-4"></div>
+            <div class="work-preview-model" id="work-model-5"></div>
+            <div class="work-preview-model" id="work-model-6"></div>
+
+            <div class="work-preview-overlay">
+              <p class="work-preview-label">Current Project</p>
+              <h3 class="work-preview-title">Project One</h3>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="skills-section" id="skills">
-      <div class="skills-header">
+ <section class="about-section section-theme about-theme" id="about" data-theme="about">
+  <div class="section-overlay about-overlay"></div>
+
+  <div class="section-title-row reveal-up">
+    <h2>About me</h2>
+  </div>
+
+  <div class="about-content">
+    <div class="about-lanyard-wrap reveal-scale">
+      <div class="lanyard-string"></div>
+
+      <div class="lanyard-card">
+        <div class="lanyard-hole"></div>
+
+        <div class="lanyard-card-top">
+          <span class="lanyard-tag">Portfolio Card</span>
+          <span class="lanyard-id">01</span>
+        </div>
+
+        <div class="lanyard-avatar">
+          <img src="images/me.png.jpg" alt="Jaydan portrait" class="lanyard-avatar-img">
+        </div>
+
+        <div class="lanyard-info">
+          <h3>Jaydan de Windt</h3>
+         
+        </div>
+
+      </div>
+    </div>
+
+    <div class="about-text reveal-up">
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipiscing elit.
+        Quisque faucibus ex sapien vitae pellentesque sem placerat.
+        Litora torquent per conubia nostra inceptos himenaeos.
+      </p>
+    </div>
+  </div>
+</section>
+
+    <section class="skills-section section-theme skills-theme" id="skills" data-theme="skills">
+      <div class="section-overlay skills-overlay"></div>
+
+      <div class="skills-header reveal-up">
         <h2>My Skills</h2>
       </div>
 
       <div class="skills-stack">
-        <article class="skill-card skill-card-1">
+        <article class="skill-card skill-card-1 reveal-up">
           <div class="skill-card-inner">
             <span class="skill-label">Frontend</span>
             <h3>HTML</h3>
@@ -161,7 +219,7 @@
           </div>
         </article>
 
-        <article class="skill-card skill-card-2">
+        <article class="skill-card skill-card-2 reveal-up">
           <div class="skill-card-inner">
             <span class="skill-label">Styling</span>
             <h3>CSS</h3>
@@ -170,7 +228,7 @@
           </div>
         </article>
 
-        <article class="skill-card skill-card-3">
+        <article class="skill-card skill-card-3 reveal-up">
           <div class="skill-card-inner">
             <span class="skill-label">Interaction</span>
             <h3>JavaScript</h3>
@@ -179,7 +237,7 @@
           </div>
         </article>
 
-        <article class="skill-card skill-card-4">
+        <article class="skill-card skill-card-4 reveal-up">
           <div class="skill-card-inner">
             <span class="skill-label">3D / Web</span>
             <h3>Three.js</h3>
@@ -188,7 +246,7 @@
           </div>
         </article>
 
-        <article class="skill-card skill-card-5">
+        <article class="skill-card skill-card-5 reveal-up">
           <div class="skill-card-inner">
             <span class="skill-label">Design</span>
             <h3>Figma</h3>
@@ -197,7 +255,7 @@
           </div>
         </article>
 
-        <article class="skill-card skill-card-6">
+        <article class="skill-card skill-card-6 reveal-up">
           <div class="skill-card-inner">
             <span class="skill-label">Version Control</span>
             <h3>GitHub</h3>
@@ -208,11 +266,29 @@
       </div>
     </section>
 
-    <section class="cta-section">
-      <h2>Lets work together to<br>make something great</h2>
+    <section class="cta-section section-theme cta-theme" id="contact" data-theme="cta">
+      <div class="section-overlay cta-overlay"></div>
+      <h2 class="reveal-up">Lets work together to<br>make something great</h2>
     </section>
   </main>
 
   <script type="module" src="js/three.js"></script>
+  <script type="module">
+    const heroWord = document.querySelector(".hero-typewriter");
+    if (heroWord) {
+      const words = heroWord.dataset.words.split(",").map(word => word.trim()).filter(Boolean);
+      let index = 0;
+
+      const updateWord = () => {
+        index = (index + 1) % words.length;
+        heroWord.classList.remove("animate");
+        void heroWord.offsetWidth;
+        heroWord.textContent = words[index];
+        heroWord.classList.add("animate");
+      };
+
+      setInterval(updateWord, 3000);
+    }
+  </script>
 </body>
 </html>

@@ -2,149 +2,84 @@ import * as THREE from "https://unpkg.com/three@0.129.0/build/three.module.js";
 import { OrbitControls } from "https://unpkg.com/three@0.129.0/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "https://unpkg.com/three@0.129.0/examples/jsm/loaders/GLTFLoader.js";
 
-const video = document.createElement("video");
-video.src = "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4";
-video.crossOrigin = "anonymous";
-video.loop = true;
-video.muted = true;
-video.playsInline = true;
-video.autoplay = true;
-video.style.display = "none";
-document.body.appendChild(video);
-video.load();
-video.addEventListener('loadeddata', () => console.log('Video loaded successfully'));
-video.addEventListener('error', (e) => console.error('Video load error:', e));
-video.play().catch((e) => console.log("Initial video play blocked:", e));
-
-const videoTexture = new THREE.VideoTexture(video);
-videoTexture.minFilter = THREE.LinearFilter;
-videoTexture.magFilter = THREE.LinearFilter;
-videoTexture.format = THREE.RGBFormat;
-videoTexture.wrapS = THREE.ClampToEdgeWrapping;
-videoTexture.wrapT = THREE.ClampToEdgeWrapping;
-videoTexture.repeat.set(1, 1);
-videoTexture.offset.set(0, 0);
-
-// Material for the video plane
-const videoMat = new THREE.MeshBasicMaterial({
-  map: videoTexture,
-  side: THREE.DoubleSide,
-});
-
-// Function to create a curved edge plane
-function createCurvedEdgePlane(width, height, segments = 16) {
-  const geometry = new THREE.PlaneGeometry(width, height, segments, segments);
-  const pos = geometry.attributes.position;
-  const arr = pos.array;
-
-  // Curve the edges inward
-  for (let i = 0; i < arr.length; i += 3) {
-    const x = arr[i];
-    const y = arr[i + 1];
-
-    // Normalize distance from center (0 at center, 1 at edge)
-    const distX = Math.abs(x) / (width / 2);
-    const distY = Math.abs(y) / (height / 2);
-    const dist = Math.max(distX, distY);
-
-    // Apply curve to outer portions
-    if (dist > 0.4) {
-      const curveInfluence = Math.pow((dist - 0.4) / 0.6, 2);
-      arr[i + 2] = -curveInfluence * 0.15; // curve inward (negative Z)
-    }
-  }
-
-  pos.needsUpdate = true;
-  geometry.computeVertexNormals();
-  return geometry;
-}
+document.body.setAttribute("data-theme", "hero");
 
 const modelConfigs = [
   {
-  id: "hero-model",
-  path: "../models/scene.glb",
-  scale: 4.2,
-  floating: true,
-  yOffset: 0.25,
-  cameraZ: 7.2,
-  wobble: false
-},,
+    id: "hero-model",
+    path: "../models/chromed_crown.glb",
+    scale: 4.2,
+    floating: true,
+    yOffset: 0.25,
+    cameraZ: 7.2,
+    wobble: false
+  },
   {
     id: "work-model-1",
-    path: "../models/work-model-1.glb",
-    scale: 2.2,
+    path: "../models/soviet_retro_tv.glb",
+    scale: 2.5,
     floating: false,
     yOffset: 0,
-    cameraZ: 4,
+    cameraZ: 5.2,
     wobble: false
   },
   {
     id: "work-model-2",
-    path: "../models/work-model-2.glb",
-    scale: 2.2,
+    path: "../models/gopro_10.glb",
+    scale: 2.5,
     floating: false,
     yOffset: 0,
-    cameraZ: 4,
+    cameraZ: 5.2,
     wobble: false
   },
   {
     id: "work-model-3",
-    path: "../models/work-model-3.glb",
-    scale: 2.2,
+    path: "../models/gadget_-_player_-_storage_device.glb",
+    scale: 2.5,
     floating: false,
     yOffset: 0,
-    cameraZ: 4,
+    cameraZ: 5.2,
     wobble: false
   },
   {
     id: "work-model-4",
     path: "../models/work-model-4.glb",
-    scale: 2.2,
+    scale: 2.5,
     floating: false,
     yOffset: 0,
-    cameraZ: 4,
+    cameraZ: 5.2,
     wobble: false
   },
   {
     id: "work-model-5",
     path: "../models/work-model-5.glb",
-    scale: 2.2,
+    scale: 2.5,
     floating: false,
     yOffset: 0,
-    cameraZ: 4,
+    cameraZ: 5.2,
     wobble: false
   },
   {
     id: "work-model-6",
     path: "../models/work-model-6.glb",
-    scale: 2.2,
+    scale: 2.5,
     floating: false,
     yOffset: 0,
-    cameraZ: 4,
+    cameraZ: 5.2,
     wobble: false
   },
   {
-    id: "about-model",
-    path: "../models/gopro_10.glb",
-    scale: 6,
+    id: "skills-model-html",
+    path: "../models/html5_logo.glb",
+    scale: 2.2,
     floating: true,
-    yOffset: 0.6,
-    cameraZ: 4.6,
-    wobble: true
+    yOffset: 0.1,
+    cameraZ: 4.8,
+    wobble: false,
+    rotateX: 0,
+    rotateY: -1.57,
+    rotateZ: 0
   },
-
-  {
-  id: "skills-model-html",
-  path: "../models/html5_logo.glb",
-  scale: 2.2,
-  floating: true,
-  yOffset: 0.1,
-  cameraZ: 4.8,
-  wobble: false,
-  rotateX: 0,
-  rotateY: -1.57,
-  rotateZ: 0
-},
   {
     id: "skills-model-css",
     path: "../models/css_logo_3d_model.glb",
@@ -200,7 +135,6 @@ function create3DScene(config) {
   if (!container) return;
 
   const scene = new THREE.Scene();
-
   const width = container.clientWidth;
   const height = container.clientHeight;
 
@@ -222,16 +156,30 @@ function create3DScene(config) {
   controls.enablePan = false;
   controls.enableRotate = false;
 
-  const ambientLight = new THREE.AmbientLight(0xffffff, 1.4);
+  const ambientLight = new THREE.AmbientLight(0xffffff, config.id === "hero-model" ? 2.2 : 1.4);
   scene.add(ambientLight);
 
-  const directionalLight = new THREE.DirectionalLight(0xffffff, 1.8);
+  const directionalLight = new THREE.DirectionalLight(0xffffff, config.id === "hero-model" ? 2.8 : 1.8);
   directionalLight.position.set(3, 5, 5);
   scene.add(directionalLight);
 
-  const backLight = new THREE.DirectionalLight(0xffffff, 0.8);
+  const backLight = new THREE.DirectionalLight(0xffffff, config.id === "hero-model" ? 1.4 : 0.8);
   backLight.position.set(-3, 2, -4);
   scene.add(backLight);
+
+  if (config.id === "hero-model") {
+    const heroTopLight = new THREE.DirectionalLight(0xffffff, 2.2);
+    heroTopLight.position.set(0, 6, 2);
+    scene.add(heroTopLight);
+
+    const heroSideLight = new THREE.PointLight(0xb96bff, 2.2, 20);
+    heroSideLight.position.set(4, 2, 4);
+    scene.add(heroSideLight);
+
+    const heroFillLight = new THREE.PointLight(0xffffff, 1.4, 18);
+    heroFillLight.position.set(-4, 1, 3);
+    scene.add(heroFillLight);
+  }
 
   const loader = new GLTFLoader();
 
@@ -240,6 +188,7 @@ function create3DScene(config) {
   const clock = new THREE.Clock();
 
   const isSkillModel = config.id.startsWith("skills-model-");
+  const isWorkModel = config.id.startsWith("work-model-");
   const card = isSkillModel ? container.closest(".skill-card") : null;
   let isCardHovered = false;
 
@@ -251,17 +200,6 @@ function create3DScene(config) {
     card.addEventListener("mouseleave", () => {
       isCardHovered = false;
     });
-  }
-
-  // For hero-model video play on click
-  if (config.id === "hero-model") {
-    window.addEventListener(
-      "click",
-      () => {
-        video.play().catch((e) => console.log("video play blocked:", e));
-      },
-      { once: true }
-    );
   }
 
   loader.load(
@@ -287,69 +225,12 @@ function create3DScene(config) {
       rawModel.rotation.y = config.rotateY || 0;
       rawModel.rotation.z = config.rotateZ || 0;
 
-      if (config.id === "hero-model") {
-        // Create the curved video plane for the TV screen
-        const videoPlane = new THREE.Mesh(createCurvedEdgePlane(1.2, 0.7), videoMat);
-
-        // Position and scale the plane inside the model
-        const box = new THREE.Box3().setFromObject(rawModel);
-        const size = box.getSize(new THREE.Vector3());
-        videoPlane.position.set(0, size.y * 0.63, size.z * 0.38);
-        videoPlane.scale.set(size.x * 0.57, size.y * 0.7, 1);
-        videoPlane.position.z += 0.01;
-
-        rawModel.add(videoPlane);
-
-        // Start video
-        video.play().catch(() => {});
-
-        // Debug: Add a visible debug plane to check if video texture works
-        const debugPlane = new THREE.Mesh(
-          new THREE.PlaneGeometry(3, 2),
-          new THREE.MeshBasicMaterial({ map: videoTexture, side: THREE.DoubleSide })
-        );
-        debugPlane.position.set(0, size.y * 0.8, size.z * 1.5);
-        scene.add(debugPlane);
-
-        console.log("Video plane added to model, debug plane at", debugPlane.position);
-      } else {
-        // For other models, apply texture directly if needed
-        rawModel.traverse((child) => {
-          if (child.isMesh) {
-            const name = child.name.toLowerCase();
-            if (name.includes("screen") || name.includes("display") || name.includes("panel") || name.includes("monitor") || name.includes("tv") || name.includes("glass")) {
-              child.material = new THREE.MeshBasicMaterial({
-                map: videoTexture,
-                toneMapped: false,
-                side: THREE.FrontSide
-              });
-              child.material.needsUpdate = true;
-            }
-          }
-        });
-      }
-
       pivot = new THREE.Group();
       pivot.position.y = config.yOffset || 0;
       pivot.add(rawModel);
 
       baseY = pivot.position.y;
       scene.add(pivot);
-
-      // Adjust camera for large models
-      if (config.id === "about-model") {
-        const maxDim = Math.max(size.x, size.y, size.z);
-        const fov = camera.fov * (Math.PI / 180);
-        let newCameraZ = Math.abs((maxDim / 2) / Math.tan(fov / 2));
-        newCameraZ *= 2.5; // Extra padding
-        camera.position.set(0, maxDim * 0.35, newCameraZ);
-        camera.near = maxDim / 100;
-        camera.far = maxDim * 100;
-        camera.updateProjectionMatrix();
-        controls.target.set(0, 0, 0);
-        controls.update();
-        console.log("Adjusted camera for about-model: z =", newCameraZ, "model size:", size);
-      }
     },
     function (xhr) {
       if (xhr.total) {
@@ -371,6 +252,8 @@ function create3DScene(config) {
     requestAnimationFrame(animate);
 
     const elapsed = clock.getElapsedTime();
+    const preview = isWorkModel ? container : null;
+    const isPreviewActive = preview ? preview.classList.contains("active-preview") : false;
 
     if (pivot) {
       if (isSkillModel) {
@@ -384,23 +267,21 @@ function create3DScene(config) {
           const currentRotation = normalizeAngle(pivot.rotation.y);
           pivot.rotation.y += (targetRotation - currentRotation) * 0.08;
         }
+      } else if (isWorkModel) {
+        pivot.position.y = baseY + Math.sin(elapsed * 1.5) * 0.08;
+        if (isPreviewActive) {
+          pivot.rotation.y += 0.018;
+        }
+        pivot.rotation.z = 0;
       } else if (config.floating) {
         pivot.position.y = baseY + Math.sin(elapsed * 1.6) * 0.12;
+
         if (config.id === "hero-model") {
-          pivot.rotation.y = 0;
-          pivot.position.x = 0;
-          if (config.wobble) {
-            pivot.rotation.z = Math.sin(elapsed * 1.2) * 0.08;
-          } else {
-            pivot.rotation.z = 0;
-          }
+          pivot.rotation.y += 0.012;
+          pivot.rotation.z = 0;
         } else {
           pivot.rotation.y += 0.01;
-          if (config.wobble) {
-            pivot.rotation.z = Math.sin(elapsed * 1.2) * 0.08;
-          } else {
-            pivot.rotation.z = 0;
-          }
+          pivot.rotation.z = config.wobble ? Math.sin(elapsed * 1.2) * 0.08 : 0;
         }
       } else {
         pivot.rotation.y += 0.008;
@@ -423,31 +304,103 @@ function create3DScene(config) {
     renderer.setSize(newWidth, newHeight);
   });
 }
+
+modelConfigs.forEach(create3DScene);
+
 const workItems = document.querySelectorAll(".work-item");
 const workPreviews = document.querySelectorAll(".work-preview-model");
+const workProgressFill = document.querySelector(".work-progress-fill");
+const workPreviewTitle = document.querySelector(".work-preview-title");
 
-const workObserver = new IntersectionObserver(
+function updateWorkProgress(activeItem) {
+  if (!workProgressFill || !activeItem) return;
+
+  const listWrap = document.querySelector(".work-list");
+  if (!listWrap) return;
+
+  const itemTop = activeItem.offsetTop;
+  const itemHeight = activeItem.offsetHeight;
+
+  workProgressFill.style.height = `${itemHeight * 0.72}px`;
+  workProgressFill.style.transform = `translateY(${itemTop + itemHeight * 0.14}px)`;
+}
+
+function setActiveWorkItem(item) {
+  const activeId = item.dataset.model;
+  const activeTitle = item.dataset.title || "Project";
+
+  workItems.forEach((workItem) => {
+    workItem.classList.toggle("is-active", workItem === item);
+  });
+
+  workPreviews.forEach((preview) => {
+    preview.classList.toggle("active-preview", preview.id === activeId);
+  });
+
+  if (workPreviewTitle) {
+    workPreviewTitle.style.opacity = "0";
+    workPreviewTitle.style.transform = "translateY(8px)";
+    setTimeout(() => {
+      workPreviewTitle.textContent = activeTitle;
+      workPreviewTitle.style.opacity = "1";
+      workPreviewTitle.style.transform = "translateY(0)";
+    }, 140);
+  }
+
+  updateWorkProgress(item);
+}
+
+workItems.forEach((item) => {
+  item.addEventListener("mouseenter", () => {
+    setActiveWorkItem(item);
+  });
+
+  item.addEventListener("focus", () => {
+    setActiveWorkItem(item);
+  });
+});
+
+window.addEventListener("load", () => {
+  const firstActive = document.querySelector(".work-item.is-active") || workItems[0];
+  if (firstActive) setActiveWorkItem(firstActive);
+});
+
+const themedSections = document.querySelectorAll(".section-theme");
+
+const themeObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
 
-      const activeId = entry.target.dataset.model;
-
-      workItems.forEach((item) => {
-        item.classList.toggle("is-active", item === entry.target);
-      });
-
-      workPreviews.forEach((preview) => {
-        preview.classList.toggle("active-preview", preview.id === activeId);
-      });
+      const theme = entry.target.dataset.theme;
+      if (theme) {
+        document.body.setAttribute("data-theme", theme);
+      }
     });
   },
   {
-    threshold: 0.6
+    threshold: 0.45
   }
 );
 
-workItems.forEach((item) => workObserver.observe(item));
+themedSections.forEach((section) => themeObserver.observe(section));
 
+const revealTargets = document.querySelectorAll(".reveal-up, .reveal-scale");
 
-modelConfigs.forEach(create3DScene);
+const revealObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("reveal-visible");
+      } else {
+        entry.target.classList.remove("reveal-visible");
+      }
+    });
+  },
+  {
+    threshold: 0.18,
+    rootMargin: "0px 0px -8% 0px"
+  }
+);
+
+revealTargets.forEach((target) => revealObserver.observe(target));
