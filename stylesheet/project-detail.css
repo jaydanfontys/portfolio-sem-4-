@@ -1,0 +1,331 @@
+body {
+  background-color: #131313;
+  color: #e5e2e1;
+  overflow-x: hidden;
+  cursor: crosshair;
+}
+
+a {
+  text-decoration: none;
+}
+
+.scanning-line {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ecb2ff, transparent);
+  animation: scan 4s linear infinite;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+@keyframes scan {
+  0% {
+    top: -10%;
+  }
+
+  100% {
+    top: 110%;
+  }
+}
+
+.glass {
+  background: rgba(20, 20, 20, 0.7);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.neon-glow {
+  box-shadow: 0 0 20px rgba(236, 178, 255, 0.15);
+}
+
+.neon-glow-hover:hover {
+  box-shadow: 0 0 30px rgba(236, 178, 255, 0.4);
+  border-color: rgba(236, 178, 255, 0.5);
+  transition: all 0.3s ease;
+}
+
+.architect-grid {
+  background-size: 40px 40px;
+  background-image: radial-gradient(circle, rgba(236, 178, 255, 0.05) 1px, transparent 1px);
+}
+
+.project-hero-bg {
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(19, 19, 19, 0.55),
+      rgba(19, 19, 19, 0.82),
+      #131313
+    ),
+    radial-gradient(circle at 65% 45%, rgba(189, 0, 255, 0.28), transparent 32%),
+    url("/images/zandloper-1.png");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.parallax-text {
+  transition: transform 0.1s ease-out;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #131313;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #ecb2ff;
+}
+
+.project-card-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+}
+
+@media (max-width: 900px) {
+  nav {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  .px-margin-desktop {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+
+  .left-margin-desktop {
+    left: 20px !important;
+  }
+
+  .right-margin-desktop {
+    right: 20px !important;
+  }
+
+  .text-display-lg-mobile {
+    font-size: 46px !important;
+    line-height: 52px !important;
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+    cursor: auto;
+  }
+
+  nav {
+    height: auto !important;
+    min-height: 64px;
+    gap: 16px;
+  }
+
+  nav .flex.items-center.gap-6 {
+    display: none;
+  }
+
+  .absolute.top-24.right-margin-desktop {
+    display: none;
+  }
+
+  .absolute.top-24.left-margin-desktop {
+    display: none;
+  }
+
+  .font-headline-md {
+    font-size: 32px !important;
+  }
+
+  .glass.p-12 {
+    padding: 28px !important;
+  }
+
+  img.h-\[600px\] {
+    height: 360px !important;
+  }
+
+  img.h-\[400px\] {
+    height: 300px !important;
+  }
+
+  footer {
+    align-items: flex-start !important;
+  }
+
+  footer .flex.gap-8 {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+.project-video-card {
+  position: relative;
+  min-height: 360px;
+  border: 1px solid rgba(236, 178, 255, 0.45);
+  background: #0d0d0d;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.project-video-card::before,
+.project-video-card::after {
+  content: "";
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  z-index: 3;
+}
+
+.project-video-card::before {
+  top: -1px;
+  left: -1px;
+  border-top: 2px solid #ecb2ff;
+  border-left: 2px solid #ecb2ff;
+}
+
+.project-video-card::after {
+  bottom: -1px;
+  right: -1px;
+  border-bottom: 2px solid #ecb2ff;
+  border-right: 2px solid #ecb2ff;
+}
+
+.project-video {
+  width: 100%;
+  height: 100%;
+  min-height: 360px;
+  object-fit: cover;
+  opacity: 0.55;
+  filter: grayscale(0.4);
+}
+
+.video-label {
+  position: absolute;
+  top: 32px;
+  right: 40px;
+  z-index: 4;
+  border: 2px solid #ffaedd;
+  color: #ffaedd;
+  padding: 12px 24px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  background: rgba(13, 13, 13, 0.75);
+}
+
+.video-play-button {
+  position: absolute;
+  z-index: 5;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 14px solid rgba(236, 178, 255, 0.35);
+  background: transparent;
+  color: rgba(236, 178, 255, 0.65);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.video-play-button:hover {
+  transform: scale(1.08);
+  border-color: rgba(236, 178, 255, 0.8);
+  color: #ecb2ff;
+}
+
+.video-play-button .material-symbols-outlined {
+  font-size: 72px;
+}
+
+.video-caption {
+  position: absolute;
+  left: 40px;
+  bottom: 36px;
+  z-index: 4;
+  color: rgba(229, 226, 225, 0.45);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.project-video-card.is-playing .video-play-button {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.project-video-card.is-playing .project-video {
+  opacity: 1;
+  filter: grayscale(0);
+}
+
+@media (max-width: 700px) {
+  .project-video-card {
+    min-height: 260px;
+  }
+
+  .project-video {
+    min-height: 260px;
+  }
+
+  .video-play-button {
+    width: 86px;
+    height: 86px;
+    border-width: 9px;
+  }
+
+  .video-play-button .material-symbols-outlined {
+    font-size: 54px;
+  }
+
+  .video-label {
+    top: 20px;
+    right: 20px;
+    font-size: 13px;
+    padding: 8px 14px;
+  }
+
+  .video-caption {
+    left: 22px;
+    bottom: 22px;
+    font-size: 14px;
+  }
+}
+
+.video-section-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.video-description {
+  color: rgba(229, 226, 225, 0.72);
+  font-family: "Hanken Grotesk", sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  border-left: 2px solid rgba(236, 178, 255, 0.55);
+  padding-left: 18px;
+  max-width: 620px;
+}
+
+.video-description::before {
+  content: "[ TRAILER_NOTE ] ";
+  color: #ecb2ff;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+

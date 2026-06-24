@@ -1,319 +1,432 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="dark" lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>3D Portfolio</title>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Jaydan de Windt | Creative Developer Portfolio</title>
+
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#bd00ff",
+            secondary: "#ff00ff",
+            background: "#05020a",
+            surface: "#17111d",
+            "surface-container": "#241d2a",
+            "on-surface": "#ebdef0"
+          },
+          fontFamily: {
+            "display-lg": ["Playfair Display", "serif"],
+            "body-md": ["Space Grotesk", "sans-serif"],
+            "data-label": ["JetBrains Mono", "monospace"]
+          }
+        }
+      }
+    };
+  </script>
+
   <link rel="stylesheet" href="stylesheet/style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
-  <div class="bg-animation">
-    <div class="bg-grid"></div>
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
+
+<body class="font-body-md text-on-surface selection:bg-primary selection:text-white grid-bg">
+  <div class="scanline"></div>
+
+  <div class="screen-frame">
+    <div class="frame-line frame-top-left-x"></div>
+    <div class="frame-line frame-top-left-y"></div>
+    <div class="frame-line frame-bottom-right-x"></div>
+    <div class="frame-line frame-bottom-right-y"></div>
+
+    <div class="coords">
+      LAT: 52.3676° N<br />
+      LON: 4.9041° E<br />
+      ALT: 12.0M
+    </div>
+
+    <div class="system-label">
+      ARCHITECT_OS_v4.0.1
+    </div>
   </div>
 
-  <header class="navbar">
-    <div class="nav-icon">J</div>
+  <div class="top-ticker">
+    <div class="ticker-wrapper">
+      <span>[ SYSTEM: OPERATIONAL ]</span>
+      <span>CORE_CLOCK: <span id="time">00:00:00</span></span>
+      <span>AVAILABLE FOR FREELANCE / 2026</span>
+      <span>NEURAL_LINK: ACTIVE</span>
+      <span>[ SYSTEM: OPERATIONAL ]</span>
+      <span>CORE_CLOCK: <span id="time-2">00:00:00</span></span>
+      <span>AVAILABLE FOR FREELANCE / 2026</span>
+      <span>NEURAL_LINK: ACTIVE</span>
+    </div>
+  </div>
 
-    <nav class="nav-pill">
-      <ul class="nav-links">
-        <li><a href="#work">Portfolio</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
+  <header class="main-header">
+    <a href="#" class="logo glitch-text">
+      JAYDAN <span>DE WINDT</span>
+    </a>
+
+    <nav>
+      <a href="#portfolio" class="active">01_PROJECTS</a>
+      <a href="#about">02_ABOUT</a>
+      <a href="#skills">03_SKILLS</a>
+      <a href="#contact">04_CONTACT</a>
     </nav>
 
-    <div class="nav-menu">✦</div>
+    <a href="#contact" class="primary-btn">Initialize</a>
   </header>
 
   <main>
+    <section class="hero-section">
+      <div id="threejs-container-ANIMATION_17"></div>
+      <div class="hero-overlay"></div>
 
-     <script type="importmap">
-              {
-                "imports": {
-                  "three": "https://unpkg.com/three@0.129.0/build/three.module.js"
-                }
-              }
-             </script>
+      <div class="hero-content">
+        <div class="reveal-up section-kicker">
+          <span></span>
+          Media Creation /  Developer
+        </div>
 
-
-    <section class="hero section-theme hero-theme" data-theme="hero">
-
-      
-      <div class="section-overlay hero-overlay"></div>
-
-      <div class="hero-label reveal-up">Featured digital experience</div>
-
-      <div class="hero-left reveal-up">
-        <p class="hero-eyebrow">Creative developer studio</p>
-
-        <h1>
-          Welcome  I’m Jaydan de Windt, a creative developer focused on
-    immersive 3D storytelling, sharp UI design, and interactive
-          <span class="hero-typewriter animate" data-words="motion,impact,flow,vision">motion</span>.
+        <h1 class="hero-title parallax-target">
+          <span class="reveal-up">JAYDAN</span>
+          <span class="reveal-up italic-text">DE WINDT</span>
         </h1>
 
-        <p class="hero-subtext">
-          This portfolio is a curated look into who I am, the projects I’ve created,
-    and the skills I continue to develop. It was designed to give future employers
-    a clear sense of my style, my creativity, and the way I bring frontend ideas
-    to life through premium visuals, modern animation, and memorable digital experiences.
-        </p>
-      </div>
+        <div class="reveal-up hero-bottom">
+          <p>
+            I build digital experiences that combine
+            <strong>visual design, interactive code, cinematic storytelling, and motion</strong>.
+          </p>
 
-      
-      <div class="hero-right reveal-scale">
-        <div class="hero-visual">
-          <div class="hero-glow"></div>
-          <div class="model-box hero-model" id="hero-model"></div>
-        </div>
-      </div>
+          <div class="hero-actions">
+            <a href="#portfolio" class="sequence-link">
+              <span class="circle-icon">
+                <span class="material-symbols-outlined">arrow_downward</span>
+              </span>
+              Begin Sequence
+            </a>
 
-      <div class="hero-scroll reveal-up">
-        <span class="hero-scroll-arrow"></span>
-        <p>Scroll to explore</p>
-      </div>
-    </section>
-
-    <section class="work-section section-theme work-theme" id="work" data-theme="work">
-      <div class="section-overlay work-overlay"></div>
-
-      <div class="work-layout">
-        <div class="work-left">
-          <p class="work-kicker reveal-up">Selected Projects</p>
-          <h2 class="reveal-up">My Work</h2>
-
-          <div class="work-list-wrap reveal-up">
-            <div class="work-progress-line">
-              <span class="work-progress-fill"></span>
-            </div>
-
-            <div class="work-list">
-              <article class="work-item is-active" data-model="work-model-1" data-title="Project One" tabindex="0">
-                <span class="work-number">01</span>
-                <div class="work-copy">
-                  <h3>Project One</h3>
-                  <p>A bold interactive project focused on visual storytelling and motion.</p>
-                </div>
-              </article>
-
-              <article class="work-item" data-model="work-model-2" data-title="Project Two" tabindex="0">
-                <span class="work-number">02</span>
-                <div class="work-copy">
-                  <h3>Project Two</h3>
-                  <p>A web experience combining layout, branding, and immersive presentation.</p>
-                </div>
-              </article>
-
-              <article class="work-item" data-model="work-model-3" data-title="Project Three" tabindex="0">
-                <span class="work-number">03</span>
-                <div class="work-copy">
-                  <h3>Project Three</h3>
-                  <p>A concept-driven design exploring interaction, visuals, and digital identity.</p>
-                </div>
-              </article>
-
-              <article class="work-item" data-model="work-model-4" data-title="Project Four" tabindex="0">
-                <span class="work-number">04</span>
-                <div class="work-copy">
-                  <h3>Project Four</h3>
-                  <p>A creative project where structure, pacing, and visual design work together.</p>
-                </div>
-              </article>
-
-              <article class="work-item" data-model="work-model-5" data-title="Project Five" tabindex="0">
-                <span class="work-number">05</span>
-                <div class="work-copy">
-                  <h3>Project Five</h3>
-                  <p>A stylized piece focused on strong aesthetics, smooth motion, and atmosphere.</p>
-                </div>
-              </article>
-
-              <article class="work-item" data-model="work-model-6" data-title="Project Six" tabindex="0">
-                <span class="work-number">06</span>
-                <div class="work-copy">
-                  <h3>Project Six</h3>
-                  <p>A showcase piece highlighting experimentation with 3D, interface, and flow.</p>
-                </div>
-              </article>
-            </div>
-          </div>
-        </div>
-
-        <div class="work-right reveal-scale">
-          <div class="work-sticky-preview">
-            <div class="work-preview-model active-preview" id="work-model-1"></div>
-            <div class="work-preview-model" id="work-model-2"></div>
-            <div class="work-preview-model" id="work-model-3"></div>
-            <div class="work-preview-model" id="work-model-4"></div>
-            <div class="work-preview-model" id="work-model-5"></div>
-            <div class="work-preview-model" id="work-model-6"></div>
-
-            <div class="work-preview-overlay">
-              <p class="work-preview-label">Current Project</p>
-              <h3 class="work-preview-title">Project One</h3>
+            <div class="glass-panel hero-stats">
+              <div>
+                <span>FOCUS</span>
+                <strong>MEDIA</strong>
+              </div>
+              <div>
+                <span>MODE</span>
+                <strong>BUILD</strong>
+              </div>
+              <div>
+                <span>ENGINE</span>
+                <strong>WEBGL</strong>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
- <section class="about-section section-theme about-theme" id="about" data-theme="about">
-  <div class="section-overlay about-overlay"></div>
+    <section class="section portfolio-section" id="portfolio">
+      <h2 class="big-bg-text">ARCHIVE</h2>
 
-  <div class="section-title-row reveal-up">
-    <h2>About me</h2>
-  </div>
-
-  <div class="about-content">
-    <div class="about-lanyard-wrap reveal-scale">
-      <div class="lanyard-string"></div>
-
-      <div class="lanyard-card">
-        <div class="lanyard-hole"></div>
-
-        <div class="lanyard-card-top">
-          <span class="lanyard-tag">Portfolio Card</span>
-          <span class="lanyard-id">01</span>
-        </div>
-
-        <div class="lanyard-avatar">
-          <img src="images/me.png.jpg" alt="Jaydan portrait" class="lanyard-avatar-img">
-        </div>
-
-        <div class="lanyard-info">
-          <h3>Jaydan de Windt</h3>
-         
-        </div>
-
+      <div class="section-heading reveal-up">
+        <span>ACTIVE_SYSTEM_NODES</span>
+        <h3>Deployed_Projects</h3>
       </div>
-    </div>
 
-    <div class="about-text reveal-up">
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipiscing elit.
-        Quisque faucibus ex sapien vitae pellentesque sem placerat.
-        Litora torquent per conubia nostra inceptos himenaeos.
-      </p>
-    </div>
-  </div>
-</section>
+      <div class="project-grid">
+        <a href="project-detail.html" class="project-card-link node-card large-card" aria-label="Open Zandloper project details">
+          <div class="glowing-aura"></div>
+          <div class="card-scanline"></div>
+          <img class="project-image" src="images/zandloper-1.png" alt="Zandloper project cover" />
 
+          <div class="card-content">
+            <span>[ NODE_01 ]</span>
+            <h4>Zandloper</h4>
+            <p>I helped film and edit a music video trailer for an upcoming artist.</p>
+          </div>
+        </a>
 
-<section class="skills-section section-theme skills-theme" id="skills" data-theme="skills">
-  <div class="section-overlay skills-overlay"></div>
+        <a href="flipbook.html" class="project-card-link node-card small-card" aria-label="Open 3D Flip Book project details">
+          <div class="glowing-aura"></div>
+          <div class="card-scanline"></div>
+          <img class="project-image" src="images/flipbook-1.png" alt="3D Flip Book project cover" />
 
-  <div class="skills-shell reveal-up">
-    <div class="skills-topline">
-      <span class="skills-kicker">Capabilities</span>
-      <h2>My Skills</h2>
-    </div>
+          <div class="card-content">
+            <span>[ NODE_02_WEB ]</span>
+            <h4>3D Flip Book</h4>
+            <p>Interactive layout prototype for storytelling and immersive web experiences.</p>
+          </div>
+        </a>
 
-    <div class="skills-showcase">
-      <aside class="skills-nav">
-        <button class="skill-tab is-active" data-skill="html">
-          <span class="skill-tab-number">01</span>
-          <span class="skill-tab-name">HTML</span>
-        </button>
+        <a href="owow.html" class="project-card-link node-card small-card highlighted-card" aria-label="Open OWOW Dashboard project details">
+          <div class="glowing-aura"></div>
+          <div class="card-scanline"></div>
+          <img class="project-image" src="images/owow-1.png" alt="OWOW Dashboard project cover" />
 
-        <button class="skill-tab" data-skill="css">
-          <span class="skill-tab-number">02</span>
-          <span class="skill-tab-name">CSS</span>
-        </button>
+          <div class="card-content full-content">
+            <span>[ ACTIVE_DATA ]</span>
+            <h4>OWOW DASHBOARD</h4>
+            <p>A clean dashboard concept using futuristic UI, readable cards and strong hierarchy.</p>
+            <div class="mini-grid"></div>
+          </div>
+        </a>
 
-        <button class="skill-tab" data-skill="js">
-          <span class="skill-tab-number">03</span>
-          <span class="skill-tab-name">JavaScript</span>
-        </button>
+        <a href="world.html" class="project-card-link node-card wide-card" aria-label="Open World of Entertainment project details">
+          <div class="glowing-aura"></div>
+          <div class="card-scanline"></div>
+          <img class="project-image" src="images/world-of-1.png" alt="World of Entertainment project cover" />
 
-        <button class="skill-tab" data-skill="three">
-          <span class="skill-tab-number">04</span>
-          <span class="skill-tab-name">Three.js</span>
-        </button>
+          <div class="card-content">
+            <span>[ THREE.JS_REALM ]</span>
+            <h4>World of Entertainment</h4>
+            <p>A creative immersive system for discovering entertainment worlds powered by Three.js.</p>
+          </div>
+        </a>
+      </div>
+    </section>
 
-        <button class="skill-tab" data-skill="figma">
-          <span class="skill-tab-number">05</span>
-          <span class="skill-tab-name">Figma</span>
-        </button>
+    <section class="section about-section" id="about">
+      <div class="about-bg-word">IDENTITY</div>
 
-        <button class="skill-tab" data-skill="github">
-          <span class="skill-tab-number">06</span>
-          <span class="skill-tab-name">GitHub</span>
-        </button>
-      </aside>
+      <div class="about-grid improved-about-grid">
+        <div class="about-visuals reveal-up about-visual-column">
+          <div class="profile-card main-profile-card about-tilt-card">
+            <span>BEHIND_THE_CREATIVE</span>
+            <img class="project-image profile-cover-image" src="images/me.png.jpg" alt="Portrait of Jaydan de Windt" />
 
-      <div class="skills-stage">
-        <div class="skills-stage-glow skills-stage-glow-1"></div>
-        <div class="skills-stage-glow skills-stage-glow-2"></div>
+            <div class="profile-gradient"></div>
 
-        <div class="skills-panel">
-          <div class="skills-panel-meta">
-            <span id="skills-panel-label">Frontend</span>
-            <span id="skills-panel-count">01 / 06</span>
+            <div class="profile-status-panel">
+              <div>
+                <small>ROLE</small>
+                <strong>MEDIA CREATION</strong>
+              </div>
+              <div>
+                <small>FOCUS</small>
+                <strong>WEB / VIDEO / 3D</strong>
+              </div>
+            </div>
           </div>
 
-          <div class="skills-panel-main">
-            <div class="skills-panel-copy">
-              <h3 id="skills-panel-title">HTML</h3>
-              <p id="skills-panel-text">
-                Structure, semantics, accessibility and clean page layouts.
-              </p>
+          <div class="about-mini-terminal reveal-up">
+            <div class="terminal-header-mini">
+              <span></span>
+              <span></span>
+              <span></span>
             </div>
 
-            <div class="skills-panel-model-wrap">
-              <div class="skills-prism-bg" id="skills-prism"></div>
+            <pre><span class="terminal-purple">const</span> jaydan = {
+  role: "Creative Developer",
+  tools: ["HTML", "CSS", "JS", "Three.js"],
+  media: ["Camera", "Editing", "Color"],
+  status: "active_build"
+};</pre>
+          </div>
+        </div>
 
-              <div class="skills-panel-model is-active" id="skills-model-html"></div>
-              <div class="skills-panel-model" id="skills-model-css"></div>
-              <div class="skills-panel-model" id="skills-model-js"></div>
-              <div class="skills-panel-model" id="skills-model-three"></div>
-              <div class="skills-panel-model" id="skills-model-figma"></div>
-              <div class="skills-panel-model" id="skills-model-github"></div>
+        <div class="about-text reveal-up about-content-column">
+          <span class="section-kicker small">PERSONNEL_DOSSIER_v2.0</span>
+
+          <h2 class="about-name-title">
+            JAYDAN<br />
+            <em>DE<br />WINDT</em>
+          </h2>
+
+          <p class="about-subtitle">
+            Media Creation student / creative developer / visual storyteller
+          </p>
+
+          <div class="tech-frame about-description upgraded-description">
+            <span>[ SYNOPSIS ]</span>
+            <p>
+              I am a Front-end Developer, and Media Creation student focused on creating digital experiences with strong visuals,
+              cinematic storytelling, and interactive design. I like combining
+              <strong>web development, videography, motion, video editing, and 3D elements</strong>
+              to build projects that feel modern and memorable.
+            </p>
+          </div>
+
+          <div class="about-focus-grid">
+            <div class="focus-card reveal-up">
+              <span class="material-symbols-outlined">language</span>
+              <h4>Web Experiences</h4>
+              <p>Responsive websites, interactive layouts, and creative front-end builds.</p>
             </div>
-          
+
+            <div class="focus-card reveal-up">
+              <span class="material-symbols-outlined">movie</span>
+              <h4>Cinematic Visuals</h4>
+              <p>Camera work, editing, color grading, pacing, and visual storytelling.</p>
+            </div>
+
+            <div class="focus-card reveal-up">
+              <span class="material-symbols-outlined">deployed_code</span>
+              <h4>3D / Motion</h4>
+              <p>Three.js experiments, animated interfaces, and immersive digital concepts.</p>
+            </div>
+          </div>
+
+          <div class="about-meta improved-about-meta">
+            <span>ROLE: FRONT-END / MEDIA STUDENT</span>
+            <span>STATUS: ACTIVE_BUILD</span>
+            <span>LOCATION: NL</span>
           </div>
         </div>
       </div>
-    </div>
+    </section>
+
+    <section class="section skills-section" id="skills">
+      <h2 class="big-bg-text skills-bg">CAPABILITY</h2>
+
+      <div class="section-heading reveal-up">
+        <span>CAPABILITY_MATRIX_v4.8</span>
+        <h3>MY SKILLS</h3>
+      </div>
+
+      <div class="skills-grid">
+        <div class="skill-item reveal-up" data-percent="88">
+          <span>01</span>
+          <h4>THREE.JS</h4>
+          <p>Interactive 3D worlds and browser-based experiences.</p>
+          <div class="progress-bar"><div class="progress-bar-inner"></div></div>
+        </div>
+
+        <div class="skill-item reveal-up" data-percent="82">
+          <span>02</span>
+          <h4>UI MATRIX</h4>
+          <p>Strong layouts, visual systems and interface structure.</p>
+          <div class="progress-bar"><div class="progress-bar-inner"></div></div>
+        </div>
+
+        <div class="skill-item reveal-up" data-percent="80">
+          <span>03</span>
+          <h4>MOTION</h4>
+          <p>Animation, pacing, scroll effects and cinematic movement.</p>
+          <div class="progress-bar"><div class="progress-bar-inner"></div></div>
+        </div>
+
+        <div class="skill-item reveal-up" data-percent="85">
+          <span>04</span>
+          <h4>DAVINCI RESOLVE</h4>
+          <p>Color grading, editing and polished post-production workflows.</p>
+          <div class="progress-bar"><div class="progress-bar-inner"></div></div>
+        </div>
+
+        <div class="skill-item reveal-up" data-percent="78">
+          <span>05</span>
+          <h4>VIDEOGRAPHY</h4>
+          <p>Visual storytelling, camera work and cinematic scene building.</p>
+          <div class="progress-bar"><div class="progress-bar-inner"></div></div>
+        </div>
+
+        <div class="skill-item reveal-up" data-percent="90">
+          <span>06</span>
+          <h4>VIDEO EDITING</h4>
+          <p>Fast paced cuts, pacing, sound and narrative flow for media projects.</p>
+          <div class="progress-bar"><div class="progress-bar-inner"></div></div>
+        </div>
+
+        <div class="skill-item reveal-up" data-percent="84">
+          <span>07</span>
+          <h4>REACT</h4>
+          <p>Component-based interfaces and modern frontend development.</p>
+          <div class="progress-bar"><div class="progress-bar-inner"></div></div>
+        </div>
+
+        <div class="skill-item reveal-up" data-percent="92">
+          <span>08</span>
+          <h4>HTML / CSS / JS</h4>
+          <p>Clean structure, responsive layouts and interactive user experiences.</p>
+          <div class="progress-bar"><div class="progress-bar-inner"></div></div>
+        </div>
+
+        <div class="skill-item reveal-up" data-percent="81">
+          <span>09</span>
+          <h4>FIGMA</h4>
+          <p>Interface design, wireframes, prototyping and visual systems.</p>
+          <div class="progress-bar"><div class="progress-bar-inner"></div></div>
+        </div>
+
+        <div class="skill-item reveal-up" data-percent="79">
+          <span>10</span>
+          <h4>GITHUB</h4>
+          <p>Version control, collaboration and streamlined project workflow.</p>
+          <div class="progress-bar"><div class="progress-bar-inner"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section contact-section" id="contact">
+      <div class="contact-grid">
+        <div class="contact-left reveal-up">
+          <span class="section-kicker small">INITIAL_UPLINK_PROTOCOL_04</span>
+
+          <h2>
+            INITIATE<br />
+            <em>TERMINAL</em>
+          </h2>
+
+          <div class="terminal-box">
+            <p><span>[STATUS]</span> Establishing connection...</p>
+            <p><span>[STATUS]</span> Awaiting creative project brief...</p>
+            <p><span>[SYSTEM]</span> Project class: media / web / visual</p>
+            <p><span>[READY]</span> Jaydan is ready for the next build.</p>
+          </div>
+        </div>
+          <div class="contact-right reveal-up">
+            <div class="uplink-box tech-frame contact-hover-card">
+              <div class="contact-front">
+                <span class="material-symbols-outlined">settings_input_antenna</span>
+                <h3>ACTIVATE UPLINK</h3>
+                <p class="typing-contact-text">Hover to decrypt contact information...</p>
+              </div>
+
+              <div class="contact-hidden-info">
+                <p><span>EMAIL:</span> jaydandew13@gmail,com</p>
+                <p><span>LINKEDIN:</span> </p>
+                <p><span>INSTAGRAM:</span> @videographyaccount</p>
+                <p><span>LOCATION:</span> Netherlands</p>
+                <p><span>FOCUS:</span> Front-end / Videography / Editing / 3D Web</p>
+                <p><span>STATUS:</span> Open to internships and creative projects</p>
+              </div>
+            </div>
+
+  <div class="contact-meta">
+    <span>CONTACT_MODE: ACTIVE</span>
+    <span>CHANNEL: EMAIL / LINKEDIN</span>
   </div>
-</section>
-
-   <section class="cta-section section-theme cta-theme" id="contact" data-theme="cta">
-  <div class="section-overlay cta-overlay"></div>
-
-  <canvas class="cta-ballpit-bg" id="cta-ballpit"></canvas>
-
-  <div class="cta-content">
-    <h2 class="reveal-up">Lets work together to<br>make something great</h2>
-  </div>
-</section>
-
-
+</div>
+      </div>
+    </section>
   </main>
 
-  <script type="module" src="js/three.js"></script>
-  <script type="module">
-    const heroWord = document.querySelector(".hero-typewriter");
-    if (heroWord) {
-      const words = heroWord.dataset.words.split(",").map(word => word.trim()).filter(Boolean);
-      let index = 0;
+  <footer>
+    <div>
+      <h3>JAYDAN DE WINDT</h3>
+      <p>Creative Developer / Media Creation Student</p>
+    </div>
 
-      const updateWord = () => {
-        index = (index + 1) % words.length;
-        heroWord.classList.remove("animate");
-        void heroWord.offsetWidth;
-        heroWord.textContent = words[index];
-        heroWord.classList.add("animate");
-      };
+    <div class="footer-links">
+      <a href="#portfolio">Projects</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </footer>
 
-      setInterval(updateWord, 3000);
-    }
-  </script>
+  <script src="js/heroAnimation.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
